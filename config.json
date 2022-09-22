@@ -1,0 +1,14 @@
+{
+    "token": "paste your token here",
+    "channel": 48249818414081084,
+    "rarities": {
+        "Common": "gb",
+        "Uncommon": "gb",
+        "Super Rare": "ub",
+        "Rare": "gb",
+        "Shiny Event": "mb",
+        "Shiny Full-odds": "mb",
+        "Shiny": "prb",
+        "Legendary": "mb"
+    }
+}
