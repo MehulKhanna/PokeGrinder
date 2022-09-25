@@ -7,6 +7,14 @@ An Auto-Grinding Self-Bot for the Discord Bot PokéMeow. As efficient as can be.
 - Stops if a captcha appears and automatically continues after the captcha is solved.
 - Logs elapsed time, encounters and catches.
 
+## Upcoming Features
+1. Fishing
+2. Captcha Solver (Free In-Built)
+3. Auto Battling
+4. Auto Buy Balls
+5. Auto Release Duplicates
+6. Auto Checklist
+
 ## Installating
 
 ### On your PC
