@@ -1,6 +1,7 @@
 {
     "token": "paste your token here",
-    "channel": 2897498279487925889,
+    "channel": 7482186439173837491,
+    "captcha_solver": "True",
     "rarities": {
         "Common": "gb",
         "Uncommon": "gb",

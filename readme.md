@@ -7,13 +7,20 @@ An Auto-Grinding Self-Bot for the Discord Bot PokéMeow. As efficient as can be.
 - Stops if a captcha appears and automatically continues after the captcha is solved.
 - Logs elapsed time, encounters and catches.
 
+2. Captcha Solver
+- Solves captchas automatically under 2-3 seconds (depending on your CPU).
+- Has an accuracy of ~98.7% with 290 layers and 20,889,303 parameters.
+- Free forever!
+### Disclaimer ⚠️
+- Even with the high accuracy you should not be fully dependent on the Captcha Solver and keep an eye on the bot.
+- I will not be reponsible for any captcha bans recieved even after using this Captcha Solver.
+
 ## Upcoming Features
 1. Fishing
-2. Captcha Solver (Free In-Built)
-3. Auto Battling
-4. Auto Buy Balls
-5. Auto Release Duplicates
-6. Auto Checklist
+2. Auto Battling
+3. Auto Buy Balls
+4. Auto Release Duplicates
+5. Auto Checklist
 
 ## Installating
 
@@ -34,6 +41,14 @@ An Auto-Grinding Self-Bot for the Discord Bot PokéMeow. As efficient as can be.
 4. Inside of the repository run command `python -m pip install -r requirements.txt`
 5. Paste your Dicord Auth Token, User ID and the Channel ID you want to grind in inside `config.json`.
 6. You may also edit the rarities section in `config.json` according to your convenience.
+
+#### Install PyTorch for CaptchaSolver
+##### On Windows
+- Run `pip3 install torch torchvision torchaudio` command in terminal or powershell.
+##### On Linux
+- Run `pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu` in terminal.
+##### On MacOS
+- Run `pip3 install torch torchvision torchaudio` in terminal.
 
 ## Launching 
 1. Run `main.py` or the PokeGrinder.exe file as Administrator (Executable installation).

@@ -10,6 +10,12 @@ client = commands.Bot(command_prefix="$")
 client.config = config
 
 
+if config["captcha_solver"] == "True":
+    from modules.captcha_solver import solve
+
+    client.captcha_solver = solve
+
+
 async def load_cogs() -> None:
     await client.load_extension("cogs.startup")
     await client.load_extension("cogs.hunting")

@@ -1,8 +1,17 @@
 import asyncio
 from datetime import datetime
-from discord import InvalidData, HTTPException
 from discord.ext import commands
-from discord import Message, Interaction, InteractionType, Button
+from discord import InvalidData, HTTPException
+
+from discord import (
+    Message,
+    Interaction,
+    InteractionType,
+    Button,
+    SelectMenu,
+    SelectOption,
+    ActionRow,
+)
 
 rarities = [
     "Common",
@@ -38,7 +47,7 @@ class Hunting(commands.Cog):
             message: Message = await self.client.wait_for(
                 "message",
                 check=lambda message: interaction.channel.id == message.channel.id,
-                timeout=1,
+                timeout=2,
             )
 
         except asyncio.TimeoutError:
@@ -51,6 +60,32 @@ class Hunting(commands.Cog):
             return
 
         elif "answer the captcha below" in message.embeds[0].description:
+            print("\033[1;31m A captcha has appeared!!")
+            if self.client.config["captcha_solver"] != "True":
+                print(
+                    "\033[1;33m Not solving the captcha as captcha solver is disabled!"
+                )
+                return
+            print("\033[1;33m Solving the captcha...")
+
+            image = message.embeds[0].image.url
+
+            dropdown: ActionRow = message.components[0]
+            menu: SelectMenu = dropdown.children[0]
+            options = menu.options
+
+            option: SelectOption = [
+                option
+                for option in options
+                if option.value == self.client.captcha_solver(image)
+            ][0]
+
+            try:
+                await menu.choose(option)
+
+            except InvalidData:
+                pass
+
             return
 
         self.encounters += 1
@@ -79,7 +114,7 @@ class Hunting(commands.Cog):
             before, after = await self.client.wait_for(
                 "message_edit",
                 check=lambda before, after: before == message,
-                timeout=1,
+                timeout=2,
             )
             after: Message
 
@@ -100,6 +135,7 @@ class Hunting(commands.Cog):
         current_time = datetime.now().replace(microsecond=0)
 
         print(
+            "\033[1;0m"
             f"| Time Elapsed: {current_time - self.client.start_time} | "
             f"Encounters: {self.encounters} | "
             f"Catches: {self.catches}"
@@ -113,6 +149,8 @@ class Hunting(commands.Cog):
             or "continue playing!" not in message.content
         ):
             return
+
+        print("\033[1;32m The captcha has been solved!")
 
         await asyncio.sleep(2)
         await self.client.pokemon()
