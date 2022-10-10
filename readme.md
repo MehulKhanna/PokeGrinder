@@ -52,7 +52,7 @@ An Auto-Grinding Self-Bot for the Discord Bot PokéMeow. As efficient as can be.
 - Run `pip3 install torch torchvision torchaudio` in terminal.
 
 ## Launching 
-1. Run `main.py` or the PokeGrinder.exe file as Administrator (Executable installation).
+1. Run `main.py` or the `main.exe` file as Administrator (Executable installation).
 2. Make sure to have enough balls before starting the bot, you can purchase balls between ;p commands if you have none left.
 3. The bot will take some time (depending on your hardware) to start. When it is ready it will do ;p in the channel you provided in `config.json` and then start grinding.
 
