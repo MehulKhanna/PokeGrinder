@@ -37,10 +37,11 @@ An Auto-Grinding Self-Bot for the Discord Bot PokéMeow. As efficient as can be.
 ### Without Executable (Windows, Linux and Mac)
 1. Install Python 3.8 or higher.
 2. Download this repo then unzip it.
-3. Install git from https://git-scm.com/downloads
-4. Inside of the repository run command `python -m pip install -r requirements.txt`
-5. Paste your Dicord Auth Token, User ID and the Channel ID you want to grind in inside `config.json`.
-6. You may also edit the rarities section in `config.json` according to your convenience.
+3. Download `CaptchaSolver.pt` from https://github.com/MehulKhanna/PokeGrinder/raw/master/assets/CaptchaSolver.pt and move it into the assets folder in the unzipped folder.
+4. Install git from https://git-scm.com/downloads
+5. Inside of the repository run command `python -m pip install -r requirements.txt`
+6. Paste your Dicord Auth Token, User ID and the Channel ID you want to grind in inside `config.json`.
+7. You may also edit the rarities section in `config.json` according to your convenience.
 
 ### Install PyTorch for CaptchaSolver
 #### On Windows
