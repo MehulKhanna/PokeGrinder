@@ -1,5 +1,6 @@
 tqdm
 pandas
+PyYAML
 seaborn
 matplotlib
 opencv-python
