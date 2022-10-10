@@ -42,12 +42,12 @@ An Auto-Grinding Self-Bot for the Discord Bot PokéMeow. As efficient as can be.
 5. Paste your Dicord Auth Token, User ID and the Channel ID you want to grind in inside `config.json`.
 6. You may also edit the rarities section in `config.json` according to your convenience.
 
-#### Install PyTorch for CaptchaSolver
-##### On Windows
+### Install PyTorch for CaptchaSolver
+#### On Windows
 - Run `pip3 install torch torchvision torchaudio` command in terminal or powershell.
-##### On Linux
+#### On Linux
 - Run `pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu` in terminal.
-##### On MacOS
+#### On MacOS
 - Run `pip3 install torch torchvision torchaudio` in terminal.
 
 ## Launching 
