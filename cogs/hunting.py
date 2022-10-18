@@ -24,9 +24,27 @@ rarities = [
     "Legendary",
 ]
 
+colors = {
+    "Common": "\033[1;34m",
+    "Uncommon": "\033[1;36m",
+    "Super Rare": "\033[1;33m",
+    "Rare": "\033[1;31m",
+    "Event": "\033[1;35m",
+    "Full-odds": "\033[1;35m",
+    "Shiny": "\033[1;35m",
+    "Legendary": "\033[1;35m",
+}
 
-async def timer(command) -> None:
-    await asyncio.sleep(8.3)
+ball_strings = [
+    "Pokeballs: 0",
+    "Greatballs: 0",
+    "Ultraballs: 0",
+    "Masterballs: 0",
+]
+
+
+async def timer(command, timer) -> None:
+    await asyncio.sleep(timer)
     await command()
 
 
@@ -34,6 +52,13 @@ class Hunting(commands.Cog):
     def __init__(self, client) -> None:
         self.client: commands.Bot = client
         self.catches, self.encounters = 0, 0
+        self.timer, self.delay, self.timeout, self.auto_buy = (
+            client.timer,
+            client.delay,
+            client.timeout,
+            client.auto_buy,
+        )
+        self.auto_buy: dict
 
     @commands.Cog.listener()
     async def on_interaction(self, interaction: Interaction) -> None:
@@ -47,11 +72,11 @@ class Hunting(commands.Cog):
             message: Message = await self.client.wait_for(
                 "message",
                 check=lambda message: interaction.channel.id == message.channel.id,
-                timeout=2,
+                timeout=self.timeout,
             )
 
         except asyncio.TimeoutError:
-            asyncio.create_task(timer(self.client.pokemon))
+            asyncio.create_task(timer(self.client.pokemon, self.timer))
             return
 
         if "wait" in message.content:
@@ -60,7 +85,7 @@ class Hunting(commands.Cog):
             return
 
         elif "answer the captcha below" in message.embeds[0].description:
-            print("\033[1;31m A captcha has appeared!!")
+            print("\n\033[1;31m A captcha has appeared!!")
             if self.client.config["captcha_solver"] != "True":
                 print(
                     "\033[1;33m Not solving the captcha as captcha solver is disabled!"
@@ -105,6 +130,7 @@ class Hunting(commands.Cog):
         ][0]
 
         try:
+            await asyncio.sleep(self.delay)
             await button.click()
 
         except InvalidData:
@@ -114,7 +140,7 @@ class Hunting(commands.Cog):
             before, after = await self.client.wait_for(
                 "message_edit",
                 check=lambda before, after: before == message,
-                timeout=2,
+                timeout=self.timeout,
             )
             after: Message
 
@@ -125,21 +151,42 @@ class Hunting(commands.Cog):
             except HTTPException:
                 pass
 
-            asyncio.create_task(timer(self.client.pokemon))
+            asyncio.create_task(timer(self.client.pokemon, self.timer))
             return
 
-        asyncio.create_task(timer(self.client.pokemon))
+        asyncio.create_task(timer(self.client.pokemon, self.timer))
         if "caught" in after.embeds[0].description:
             self.catches += 1
 
         current_time = datetime.now().replace(microsecond=0)
 
         print(
-            "\033[1;0m"
-            f"| Time Elapsed: {current_time - self.client.start_time} | "
+            f"{list(colors.values())[index]} | \033[1;0m"
+            f"Time Elapsed: {current_time - self.client.start_time} | "
             f"Encounters: {self.encounters} | "
             f"Catches: {self.catches}"
         )
+
+        if self.client.config["auto-buy"] != "True":
+            return
+
+        index = [
+            index
+            for index, string in enumerate(ball_strings)
+            if string in (after.embeds[0].footer.text).replace(" :", ":")
+        ]
+
+        if index == []:
+            return
+
+        index = index[0]
+        string = list(self.auto_buy.keys())[index]
+        amount = list(self.auto_buy.values())[index]
+
+        await asyncio.sleep(4 + self.delay)
+        await self.client.shop_buy(item=f"{index + 1}", amount=amount)
+
+        print(f"\n\033[1m Bought {amount} {string}!\n")
 
     @commands.Cog.listener()
     async def on_message_edit(self, before, message: Message) -> None:
@@ -150,7 +197,7 @@ class Hunting(commands.Cog):
         ):
             return
 
-        print("\033[1;32m The captcha has been solved!")
+        print("\033[1;32m The captcha has been solved!\n")
 
         await asyncio.sleep(2)
         await self.client.pokemon()

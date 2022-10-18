@@ -5,7 +5,7 @@ model.max_det = 6
 model.agnostic = True
 
 
-def solve(image):
+def solve(image: str) -> str:
     answer = ""
 
     results = model(image, 640)

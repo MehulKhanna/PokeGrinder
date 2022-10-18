@@ -1,6 +1,8 @@
 # PokeGrinder
 An Auto-Grinding Self-Bot for the Discord Bot PokéMeow. As efficient as can be.
 
+![PokeGrinder](assets/PokeGrinder.jpg)
+
 ## Supported Features
 1. Hunting
 - Encounters Pokemons and uses a ball depending on the rarity of the Pokemon.
