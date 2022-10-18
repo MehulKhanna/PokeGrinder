@@ -13,16 +13,16 @@ An Auto-Grinding Self-Bot for the Discord Bot PokéMeow. As efficient as can be.
 - Solves captchas automatically under 2-3 seconds (depending on your CPU).
 - Has an accuracy of ~98.7% with 290 layers and 20,889,303 parameters.
 - Free forever!
-### Disclaimer ⚠️
-- Even with the high accuracy you should not be fully dependent on the Captcha Solver and keep an eye on the bot.
-- I will not be reponsible for any captcha bans recieved even after using this Captcha Solver.
+
+3. Auto Buy Balls
+- Buys balls automatically when you run out of them!
+- Amount of balls to buy can be specified in `config.json`.
 
 ## Upcoming Features
 1. Fishing
 2. Auto Battling
-3. Auto Buy Balls
-4. Auto Release Duplicates
-5. Auto Checklist
+3. Auto Release Duplicates
+4. Auto Checklist
 
 ## Installating
 
@@ -30,11 +30,6 @@ An Auto-Grinding Self-Bot for the Discord Bot PokéMeow. As efficient as can be.
 1. Download PokeGrinderExecutable.zip from https://github.com/MehulKhanna/PokeGrinder/releases and unzip it.
 2. Paste your Dicord Auth Token, User ID and the Channel ID you want to grind in inside `config.json`.
 3. You may also edit the rarities section in `config.json` according to your convenience.
-
-#### Disclaimer ⚠️
-- Windows Defender may mark the executable as a virus.
-- The executable is not a virus and the code will be exactly the same as the code in this repository.
-- If Windows Defender tries to delete or block the executable from running please disable it temporarily or whitelist the executable.
 
 ### Without Executable (Windows, Linux and Mac)
 1. Install Python 3.8 or higher.
@@ -55,13 +50,13 @@ An Auto-Grinding Self-Bot for the Discord Bot PokéMeow. As efficient as can be.
 
 ## Launching 
 1. Run `main.py` or the `main.exe` file as Administrator (Executable installation).
-2. Make sure to have enough balls before starting the bot, you can purchase balls between ;p commands if you have none left.
+2. Please buy at least 1 ball for each rarity specified in the config before starting.
 3. The bot will take some time (depending on your hardware) to start. When it is ready it will do ;p in the channel you provided in `config.json` and then start grinding.
 
 ## Stopping
-To stop the program simply close the command prompt.
+To stop the program simply close the command prompt or press ctrl+c in the command prompt.
 
 ## Disclaimer ⚠️
 - I am of course not responsible for any ban you recieve for using this bot.
-- Please keep an eye on the bot to solve captchas. Do not be irresponsible if you don't want to get banned.
+- Please keep an eye on the bot. Do not be irresponsible if you don't want to get banned.
 - Please do not grind in public servers.
