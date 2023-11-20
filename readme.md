@@ -43,6 +43,7 @@ The old captcha solver may work but with lower accuracy.
             } // Amount of balls to buy when 0 left
         }
         // You can add more clients after this
+    ]
 }
 ```
 
