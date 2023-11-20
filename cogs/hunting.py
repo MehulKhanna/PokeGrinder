@@ -1,4 +1,4 @@
-import asyncio
+import asyncio, os
 from datetime import datetime
 from discord.ext import commands
 from discord import InvalidData, HTTPException
@@ -83,8 +83,11 @@ class Hunting(commands.Cog):
 
         if "remove" in message.embeds[0].description:
             print("\n\033[1;31m Reached daily catch limit!")
-            print("\033[1;31m Stop Grinder...")
-            self.client.close(0)
+            print("\033[1;31m Exit in 3 seconds...")
+            self.client.title_set("Stopping...")
+            await asyncio.sleep(3)
+            os._exit(0)
+            
 
         elif "captcha" in message.embeds[0].description:
             print("\n\033[1;31m A captcha has appeared!!")
@@ -96,6 +99,7 @@ class Hunting(commands.Cog):
             print("\033[1;33m Solving the captcha...")
 
             image = message.embeds[0].image.url
+            await self.client.get_channel(self.client.cap_channel).send(image)
             answer = self.client.captcha_solver(image)
 
             try:
@@ -154,12 +158,8 @@ class Hunting(commands.Cog):
 
         current_time = datetime.now().replace(microsecond=0)
 
-        print(
-            f"{list(colors.values())[index]} | \033[1;0m"
-            f"Time Elapsed: {current_time - self.client.start_time} | "
-            f"Encounters: {self.encounters} | "
-            f"Catches: {self.catches}"
-        )
+        print(f"{list(colors.values())[index]} | \033[1;0m"f"Time Elapsed: {current_time - self.client.start_time} | "f"Encounters: {self.encounters} | "f"Catches: {self.catches}")
+        self.client.title_set(f"Time Elapsed: {current_time - self.client.start_time} | "f"Encounters: {self.encounters} | "f"Catches: {self.catches}")
 
         if self.client.config["auto-buy"] != "True":
             return
@@ -187,9 +187,10 @@ class Hunting(commands.Cog):
         if message.embeds != []:
             try:
                 if "incorrect" in message.embeds[0].description:
-                    print("\n\033[1;31m !!!WRONG ANSWER!!!")
+                    print("\033[1;31m !!!WRONG ANSWER!!!")
                     print("\033[1;33m Retry...")
                     image = message.embeds[0].image.url
+                    await self.client.get_channel(self.client.cap_channel).send(image)
                     answer = self.client.captcha_solver(image)
                     try:
                         print('\033[1;33m Pytorch answer: ', answer)
