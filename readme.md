@@ -28,7 +28,7 @@ An Auto-Grinding Self-Bot for the Discord Bot PokéMeow. As efficient as can be.
 ### Without Executable (Windows, Linux and Mac)
 1. Install Python 3.8 or higher.
 2. Install Git from https://git-scm.com/downloads
-3. Open cmd run git clone https://github.com/lufy20106/PokeGrinder-V2/
+3. Open cmd run `git clone https://github.com/lufy20106/PokeGrinder-V2/`
 6. Inside of the repository run command `python -m pip install -r requirements.txt`
 7. Paste your Discord Auth Token, User ID and the Channel ID you want to grind in inside `config.json`.
 8. You may also edit the rarities section in `config.json` according to your convenience.
@@ -36,7 +36,7 @@ An Auto-Grinding Self-Bot for the Discord Bot PokéMeow. As efficient as can be.
 ## Launching 
 1. Run `start.cmd` or the `main.py` file.
 2. Please buy at least 1 ball for each rarity specified in the config before starting.
-3. The bot will take some time (depending on your hardware) to start. When it is ready it will do ;p in the channel you provided in `config.json` and then start grinding.
+3. The bot will take some time (depending on your hardware) to start. When it is ready it will do `/pokemon` in the channel you provided in `config.json` and then start grinding.
 
 ## Stopping
 To stop the program simply close the command prompt or press ctrl+c in the command prompt.
