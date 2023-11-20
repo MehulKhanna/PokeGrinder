@@ -3,7 +3,6 @@ from datetime import datetime
 from discord.ext import commands
 from discord.channel import TextChannel
 
-
 class Startup(commands.Cog):
     def __init__(self, client) -> None:
         self.client: commands.Bot = client
@@ -12,8 +11,8 @@ class Startup(commands.Cog):
     async def on_ready(self) -> None:
         os.system("cls" if os.name == "nt" else "clear")
 
-        print("PokeGrinder is ready to grind!")
-        print(f"Username: {self.client.user.name}" f"#{self.client.user.discriminator}")
+        print("\033[1;33m PokeGrinder is ready to grind!")
+        print(f"\033[1;33m Username: {self.client.user.name}" f"#{self.client.user.discriminator}")
 
         coolest_ascii_font = """\033[1;33m
        __________       __            ________      .__            .___            
@@ -38,7 +37,6 @@ class Startup(commands.Cog):
         await commands[0]()
         self.client.pokemon = commands[0]
         self.client.shop_buy = commands[1].children[1]
-
 
 async def setup(client: commands.Bot) -> None:
     await client.add_cog(Startup(client))
