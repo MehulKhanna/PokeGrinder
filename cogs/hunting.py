@@ -96,7 +96,6 @@ class Hunting(commands.Cog):
             print("\033[1;33m Solving the captcha...")
 
             image = message.embeds[0].image.url
-            await self.client.get_channel(self.client.cap_channel).send(image)
             answer = self.client.captcha_solver(image)
 
             try:
@@ -191,7 +190,6 @@ class Hunting(commands.Cog):
                     print("\n\033[1;31m !!!WRONG ANSWER!!!")
                     print("\033[1;33m Retry...")
                     image = message.embeds[0].image.url
-                    await self.client.get_channel(self.client.cap_channel).send(image)
                     answer = self.client.captcha_solver(image)
                     try:
                         print('\033[1;33m Pytorch answer: ', answer)
