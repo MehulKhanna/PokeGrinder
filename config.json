@@ -1,25 +1,46 @@
 {
-    "token": "paste your token here",
-    "channel": 1024317118959346273,
-    "captcha_solver": "True",
-    "auto-buy": "True",
-    "timer": 8.4,
-    "timeout": 3,
-    "delay": 0.3,
-    "rarities": {
-        "Common": "gb",
-        "Uncommon": "gb",
-        "Super Rare": "ub",
+  "Clients": [
+    {
+      "Token": "",
+      "ChannelID": "",
+      "Grind": true,
+      "Balls": {
+        "Common": "pb",
+        "Uncommon": "pb",
         "Rare": "gb",
+        "Super Rare": "ub",
+        "Legendary": "mb",
+        "Shiny": "mb",
         "Shiny Event": "mb",
-        "Shiny Full-odds": "mb",
-        "Shiny": "prb",
-        "Legendary": "mb"
+        "Shiny Full-odds": "prb"
+      },
+      "AutoBuy": {
+        "pb": 50,
+        "gb": 25,
+        "ub": 5,
+        "mb": 0
+      }
     },
-    "auto_buy": {
-        "Pokeballs": 200,
-        "Greatballs": 100,
-        "Ultraballs": 25,
-        "Masterballs": 5
+    {
+      "Token": "",
+      "ChannelID": "",
+      "Grind": true,
+      "Balls": {
+        "Common": "pb",
+        "Uncommon": "pb",
+        "Rare": "gb",
+        "Super Rare": "gb",
+        "Legendary": "ub",
+        "Shiny": "ub",
+        "Shiny Event": "ub",
+        "Shiny Full-odds": "ub"
+      },
+      "AutoBuy": {
+        "pb": 25,
+        "gb": 5,
+        "ub": 2,
+        "mb": 0
+      }
     }
+  ]
 }
