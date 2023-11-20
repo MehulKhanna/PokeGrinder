@@ -1,25 +1,26 @@
 {
-    "token": "paste your token here",
-    "channel": 1024317118959346273,
+    "token": "YOUR TOKEN HERE",
+    "channel": FARMCHANNLID,
     "captcha_solver": "True",
     "auto-buy": "True",
-    "timer": 8.4,
+    "timermin": 7.8,
+    "timermax": 9.3,
     "timeout": 3,
-    "delay": 0.3,
+    "delay": 0.7,
     "rarities": {
-        "Common": "gb",
-        "Uncommon": "gb",
+        "Common": "pb",
+        "Uncommon": "pb",
         "Super Rare": "ub",
         "Rare": "gb",
         "Shiny Event": "mb",
         "Shiny Full-odds": "mb",
-        "Shiny": "prb",
+        "Shiny": "mb",
         "Legendary": "mb"
     },
     "auto_buy": {
-        "Pokeballs": 200,
-        "Greatballs": 100,
-        "Ultraballs": 25,
-        "Masterballs": 5
+        "Pokeballs": 100,
+        "Greatballs": 35,
+        "Ultraballs": 5,
+        "Masterballs": 1
     }
 }
