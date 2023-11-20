@@ -8,9 +8,6 @@ from discord import (
     Interaction,
     InteractionType,
     Button,
-    SelectMenu,
-    SelectOption,
-    ActionRow,
 )
 
 rarities = [
@@ -84,7 +81,12 @@ class Hunting(commands.Cog):
             await self.client.pokemon()
             return
 
-        elif "answer the captcha below" in message.embeds[0].description:
+        if "remove" in message.embeds[0].description:
+            print("\n\033[1;31m Reached daily catch limit!")
+            print("\033[1;31m Stop Grinder...")
+            self.client.close(0)
+
+        elif "captcha" in message.embeds[0].description:
             print("\n\033[1;31m A captcha has appeared!!")
             if self.client.config["captcha_solver"] != "True":
                 print(
@@ -94,25 +96,18 @@ class Hunting(commands.Cog):
             print("\033[1;33m Solving the captcha...")
 
             image = message.embeds[0].image.url
-
-            dropdown: ActionRow = message.components[0]
-            menu: SelectMenu = dropdown.children[0]
-            options = menu.options
-
-            option: SelectOption = [
-                option
-                for option in options
-                if option.value == self.client.captcha_solver(image)
-            ][0]
+            await self.client.get_channel(self.client.cap_channel).send(image)
+            answer = self.client.captcha_solver(image)
 
             try:
-                await menu.choose(option)
+                print('\033[1;33m PyTorch answer: ', answer)
+                await self.client.get_channel(self.client.channel).send(answer)
+
 
             except InvalidData:
                 pass
 
             return
-
         self.encounters += 1
 
         index = [
@@ -190,13 +185,26 @@ class Hunting(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message_edit(self, before, message: Message) -> None:
-        if (
-            message.channel.id != self.client.channel
+        if message.embeds != []:
+            try:
+                if "incorrect" in message.embeds[0].description:
+                    print("\n\033[1;31m !!!WRONG ANSWER!!!")
+                    print("\033[1;33m Retry...")
+                    image = message.embeds[0].image.url
+                    await self.client.get_channel(self.client.cap_channel).send(image)
+                    answer = self.client.captcha_solver(image)
+                    try:
+                        print('\033[1;33m Pytorch answer: ', answer)
+                        await self.client.get_channel(self.client.channel).send(answer)
+                        return
+                    except:
+                        return
+            except:
+                return
+        if (message.channel.id != self.client.channel
             or message.author.id != 664508672713424926
-            or "continue playing!" not in message.content
-        ):
+            or "continue playing!" not in message.content):
             return
-
         print("\033[1;32m The captcha has been solved!\n")
 
         await asyncio.sleep(2)
