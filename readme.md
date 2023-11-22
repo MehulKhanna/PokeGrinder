@@ -15,6 +15,9 @@ Now in Golang for better handling of interactions.
 - Buys balls automatically when you run out of them (works with both hunting and fishing)!
 - Number of balls to buy can be specified in `config.json`.
 
+4. Multiple Accounts
+- You can run multiple accounts at once!
+
 ## Upcoming Features
 1. Captcha Solver
 - Captcha Solver may take some time since I have to collect data for the new and harder captcha.
@@ -60,10 +63,13 @@ The old captcha solver may work but with lower accuracy.
                 "mb": 1
             } // How many balls to auto-buy when you have 0 left.
         }
+        // You can add more clients after this with the same type of config as above
     ]
 }
 ```
-- The Hunting and Fishing channels must be in different servers/guilds!
+- Use different channels for each account.
+- Hunting and fishing for different accounts can be in the same server.
+- The Hunting and Fishing channels for the same account must be in different servers/guilds.
 
 ## Get Token ?
 
