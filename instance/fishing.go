@@ -1,55 +1,34 @@
 package instance
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/bwmarrin/discordgo"
 	"main/discord"
+	"os"
 	"slices"
 	"strings"
 	"time"
 )
 
-var commandRetryCounter = 0
+var Fishes map[string]string
+var commandRetryCounterFish = 0
 
-func check(session *discordgo.Session, message *discordgo.MessageCreate, name string) bool {
-	if message.Author.ID != "664508672713424926" ||
-		message.Type != 20 {
-		return false
+func init() {
+	file, _ := os.ReadFile("fishes.json")
+	err := json.Unmarshal(file, &Fishes)
+	if err != nil {
+		fmt.Println("error when unmarshalling fishes.json,", err)
+		return
 	}
-
-	if message.Interaction.User.ID != session.State.User.ID ||
-		message.Interaction.Name != name {
-		return false
-	}
-
-	return true
 }
 
-func WaitForUpdate(
-	timeout time.Duration,
-	session *discordgo.Session,
-	message *discordgo.MessageCreate,
-	ch chan *discordgo.MessageUpdate,
-) {
-	handler := func(session *discordgo.Session, update *discordgo.MessageUpdate) {
-		if update.BeforeUpdate.ID == message.Message.ID {
-			ch <- update
-		}
-	}
-
-	remove := session.AddHandler(handler)
-	time.AfterFunc(timeout, func() {
-		remove()
-		ch <- nil
-	})
-}
-
-func PokemonCommandSend(session *discordgo.Session, channel *discordgo.Channel) {
+func FishCommandSend(session *discordgo.Session, channel *discordgo.Channel) {
 	client := Clients[session.Token]
 
 	ch := make(chan *discordgo.MessageCreate)
 	handler := func(session *discordgo.Session, message *discordgo.MessageCreate) {
-		if !check(session, message, "pokemon") {
+		if !check(session, message, "fish spawn") {
 			return
 		}
 
@@ -57,7 +36,12 @@ func PokemonCommandSend(session *discordgo.Session, channel *discordgo.Channel) 
 	}
 
 	remove := session.AddHandler(handler)
-	go discord.SendCommand(session, channel, client.Commands["pokemon"])
+	go discord.SendCommand(
+		session,
+		channel,
+		client.CommandsFishChannel["fish"],
+		client.CommandsFishChannel["fish"].Options[2],
+	)
 
 	time.AfterFunc(1500*time.Millisecond, func() {
 		remove()
@@ -73,14 +57,14 @@ func PokemonCommandSend(session *discordgo.Session, channel *discordgo.Channel) 
 		return
 	}
 
-	PokemonCommandSend(session, channel)
-	commandRetryCounter += 1
+	FishCommandSend(session, channel)
+	commandRetryCounterFish += 1
 }
 
-func PokemonMessage(session *discordgo.Session, message *discordgo.MessageCreate) {
+func FishSpawn(session *discordgo.Session, message *discordgo.MessageCreate) {
 	client := Clients[session.Token]
 
-	if !check(session, message, "pokemon") {
+	if !check(session, message, "fish spawn") {
 		return
 	}
 	err := session.State.MessageAdd(message.Message)
@@ -91,13 +75,14 @@ func PokemonMessage(session *discordgo.Session, message *discordgo.MessageCreate
 
 	if strings.Contains(message.Content, "Please wait") {
 		time.AfterFunc(500*time.Millisecond, func() {
-			PokemonCommandSend(session, client.Channel)
+			FishCommandSend(session, client.FishChannel)
 		})
 
 		return
+
 	} else if strings.Contains(message.Embeds[0].Description, "captcha") {
 		fmt.Println(fmt.Sprintf(
-			"%s | A captcha appeared!",
+			"%s | A captcha appeared in the fishing channel!",
 			session.State.User.Username,
 		))
 
@@ -117,28 +102,83 @@ func PokemonMessage(session *discordgo.Session, message *discordgo.MessageCreate
 			))
 
 			time.AfterFunc(500*time.Millisecond, func() {
-				PokemonCommandSend(session, client.Channel)
+				FishCommandSend(session, client.FishChannel)
 			})
 		}
 
 		return
+
+	} else if !strings.Contains(message.Embeds[0].Description, "cast out an") {
+		return
 	}
 
-	client.Encounters += 1
+	ch := make(chan *discordgo.MessageUpdate)
+	go WaitForUpdate(20000*time.Millisecond, session, message, ch)
+
+	update := <-ch
+	if update == nil {
+		fmt.Println(fmt.Sprintf(
+			"%s | Timed out while waiting for the fish spawn to be updated.",
+			session.State.User.Username,
+		))
+
+		return
+	}
+
+	err = session.State.MessageAdd(update.Message)
+	if err != nil {
+		fmt.Println(session.State.User.Username, "error while adding message to state,", err)
+		return
+	}
+
+	if strings.Contains(update.Embeds[0].Description, "Not even a nibble...") {
+		time.AfterFunc(23*time.Second, func() {
+			FishCommandSend(session, client.FishChannel)
+		})
+
+		return
+	}
+
+	ch = make(chan *discordgo.MessageUpdate)
+	go WaitForUpdate(2000*time.Millisecond, session, message, ch)
+	go discord.ClickButton(
+		session,
+		update.Message,
+		message.Components[0].(*discordgo.ActionsRow).Components[0].(*discordgo.Button),
+	)
+
+	update = <-ch
+	if update == nil {
+		fmt.Println(fmt.Sprintf(
+			"%s | Timed out while waiting for the fish spawn to be updated 2.",
+			session.State.User.Username,
+		))
+	}
+
+	err = session.State.MessageAdd(update.Message)
+	if err != nil {
+		fmt.Println(session.State.User.Username, "error while adding message to state,", err)
+		return
+	}
+
+	if !strings.Contains(update.Embeds[0].Description, "fished out a wild") {
+		time.AfterFunc(23*time.Second, func() {
+			FishCommandSend(session, client.FishChannel)
+		})
+
+		return
+	}
 
 	var order []string
-	ballsPriority := []string{"mb", "db", "prb", "ub", "gb", "pb"}
-	for rarity, ball := range client.Balls {
-		if strings.Contains(message.Embeds[0].Footer.Text, rarity) {
-			order = ballsPriority[slices.Index(ballsPriority, ball):]
-		}
-	}
+	ballsPriority := []string{"db", "mb", "prb", "ub", "gb", "pb"}
+	rarity := Fishes[strings.Split(update.Embeds[0].Description, "**")[3]]
+	order = ballsPriority[slices.Index(ballsPriority, client.FishBalls[rarity]):]
 
 	var button *discordgo.Button
 	actionRow := message.Components[0].(*discordgo.ActionsRow).Components
 	for _, ball := range order {
 		for _, element := range actionRow {
-			if element.(*discordgo.Button).CustomID == ball {
+			if element.(*discordgo.Button).CustomID == ball+"_fish" {
 				button = element.(*discordgo.Button)
 				break
 			}
@@ -149,20 +189,20 @@ func PokemonMessage(session *discordgo.Session, message *discordgo.MessageCreate
 		}
 	}
 
-	ch := make(chan *discordgo.MessageUpdate)
+	ch = make(chan *discordgo.MessageUpdate)
 	go WaitForUpdate(10*time.Second, session, message, ch)
 	if button != nil {
 		discord.ClickButton(session, message.Message, button)
 	}
 
-	update := <-ch
-	time.AfterFunc(8500*time.Millisecond, func() {
-		PokemonCommandSend(session, client.Channel)
+	update = <-ch
+	time.AfterFunc(23*time.Second, func() {
+		FishCommandSend(session, client.FishChannel)
 	})
 
 	if update != nil {
 		if strings.Contains(update.Embeds[0].Description, "caught") {
-			client.Catches += 1
+			client.FishCatches += 1
 		}
 
 		if !client.AutoBuyLock {

@@ -30,7 +30,7 @@ func main() {
 
 	var group sync.WaitGroup
 	for _, client := range config.Clients {
-		if client.Grind {
+		if client.Fishing || client.Hunting {
 			group.Add(1)
 			go instance.StartSession(client, &group)
 		}

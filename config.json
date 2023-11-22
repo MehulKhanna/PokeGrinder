@@ -3,13 +3,25 @@
     {
       "Token": "",
       "ChannelID": "",
-      "Grind": true,
+      "FishChannelID": "",
+      "Hunting": true,
+      "Fishing": true,
       "Balls": {
         "Common": "pb",
         "Uncommon": "pb",
         "Rare": "gb",
         "Super Rare": "ub",
         "Legendary": "mb",
+        "Shiny": "mb",
+        "Shiny Event": "mb",
+        "Shiny Full-odds": "prb"
+      },
+      "FishBalls": {
+        "Common": "pb",
+        "Uncommon": "gb",
+        "Rare": "ub",
+        "Super Rare": "ub",
+        "Legendary": "db",
         "Shiny": "mb",
         "Shiny Event": "mb",
         "Shiny Full-odds": "prb"
@@ -24,21 +36,33 @@
     {
       "Token": "",
       "ChannelID": "",
-      "Grind": true,
+      "FishChannelID": "",
+      "Hunting": true,
+      "Fishing": true,
       "Balls": {
         "Common": "pb",
         "Uncommon": "pb",
         "Rare": "gb",
-        "Super Rare": "gb",
-        "Legendary": "ub",
-        "Shiny": "ub",
-        "Shiny Event": "ub",
-        "Shiny Full-odds": "ub"
+        "Super Rare": "ub",
+        "Legendary": "mb",
+        "Shiny": "mb",
+        "Shiny Event": "mb",
+        "Shiny Full-odds": "prb"
+      },
+      "FishBalls": {
+        "Common": "pb",
+        "Uncommon": "gb",
+        "Rare": "ub",
+        "Super Rare": "ub",
+        "Legendary": "db",
+        "Shiny": "mb",
+        "Shiny Event": "mb",
+        "Shiny Full-odds": "prb"
       },
       "AutoBuy": {
-        "pb": 25,
-        "gb": 5,
-        "ub": 2,
+        "pb": 50,
+        "gb": 25,
+        "ub": 5,
         "mb": 0
       }
     }

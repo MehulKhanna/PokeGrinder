@@ -10,51 +10,36 @@ import (
 )
 
 type Client struct {
-	Token     string            `json:"Token"`
-	ChannelID string            `json:"ChannelID"`
-	Grind     bool              `json:"Grind"`
-	Balls     map[string]string `json:"Balls"`
-	AutoBuy   map[string]int    `json:"AutoBuy"`
+	Token         string            `json:"Token"`
+	ChannelID     string            `json:"ChannelID"`
+	FishChannelID string            `json:"FishChannelID"`
+	Hunting       bool              `json:"Hunting"`
+	Fishing       bool              `json:"Fishing"`
+	Balls         map[string]string `json:"Balls"`
+	FishBalls     map[string]string `json:"FishBalls"`
+	AutoBuy       map[string]int    `json:"AutoBuy"`
 
-	Catches    int
-	Encounters int
-	StartTime  time.Time
-	Session    *discordgo.Session
-	Channel    *discordgo.Channel
-	Commands   map[string]discord.ApplicationCommand
+	Catches             int
+	Encounters          int
+	FishCatches         int
+	AutoBuyLock         bool
+	StartTime           time.Time
+	Session             *discordgo.Session
+	Channel             *discordgo.Channel
+	FishChannel         *discordgo.Channel
+	Commands            map[string]discord.ApplicationCommand
+	CommandsFishChannel map[string]discord.ApplicationCommand
 }
 
 var Clients = map[string]*Client{}
 
-func StartSession(client Client, group *sync.WaitGroup) {
-	session, err := discordgo.New(client.Token)
-	if err != nil {
-		fmt.Println(client.Token, "error while creating session,", err)
-		return
-	}
-
-	session.Identify.Intents |= discordgo.IntentMessageContent
-	session.AddHandler(PokemonMessage)
-
-	err = session.Open()
-	if err != nil {
-		fmt.Println(client.Token, "error while opening connection,", err)
-		return
-	}
-
-	session.State.MaxMessageCount = 100
-	client.Channel, err = session.Channel(client.ChannelID)
-	if err != nil {
-		fmt.Println(session.State.User.Username, "error while finding channel,", err)
-		return
-	}
-
+func getCommands(session *discordgo.Session, channel *discordgo.Channel) map[string]discord.ApplicationCommand {
 	var ApplicationCommandIndex discord.ApplicationCommandIndex
 	response, err := session.Request(
 		"GET",
 		fmt.Sprintf(
 			"https://discord.com/api/v9/guilds/%s/application-command-index",
-			client.Channel.GuildID,
+			channel.GuildID,
 		),
 		nil,
 	)
@@ -62,20 +47,63 @@ func StartSession(client Client, group *sync.WaitGroup) {
 	err = json.Unmarshal(response, &ApplicationCommandIndex)
 	if err != nil {
 		fmt.Println(session.State.User.Username, "error while unmarshalling application command index,", err)
-		return
+		return nil
 	}
 
-	client.Commands = map[string]discord.ApplicationCommand{}
+	commands := map[string]discord.ApplicationCommand{}
 	for _, command := range ApplicationCommandIndex.ApplicationCommands {
-		client.Commands[command.Name] = command
+		commands[command.Name] = command
+	}
+
+	return commands
+}
+
+func StartSession(client Client, group *sync.WaitGroup) {
+	session, err := discordgo.New(client.Token)
+	if err != nil {
+		fmt.Println(client.Token, "error while creating session,", err)
+		return
+
+	}
+
+	session.Identify.Intents |= discordgo.IntentMessageContent
+
+	err = session.Open()
+	if err != nil {
+		fmt.Println(client.Token, "error while opening connection,", err)
+		return
 	}
 
 	client.Session = session
 	client.StartTime = time.Now()
-	client.Encounters, client.Catches = 0, 0
 	Clients[session.Token] = &client
+	session.State.MaxMessageCount = 1000
+	client.Encounters, client.Catches = 0, 0
 
-	go PokemonCommandSend(session, client.Channel)
+	if client.Fishing {
+		session.AddHandler(FishSpawn)
+		client.FishChannel, err = session.Channel(client.FishChannelID)
+		if err != nil {
+			fmt.Println(session.State.User.Username, "error while finding fishing channel,", err)
+			return
+		}
+
+		client.CommandsFishChannel = getCommands(session, client.FishChannel)
+		go FishCommandSend(session, client.FishChannel)
+	}
+
+	if client.Hunting {
+		session.AddHandler(PokemonMessage)
+		client.Channel, err = session.Channel(client.ChannelID)
+		if err != nil {
+			fmt.Println(session.State.User.Username, "error while finding channel,", err)
+			return
+		}
+
+		client.Commands = getCommands(session, client.Channel)
+		go PokemonCommandSend(session, client.Channel)
+	}
+
 	fmt.Println(session.State.User, "has started grinding!")
 	group.Done()
 }
