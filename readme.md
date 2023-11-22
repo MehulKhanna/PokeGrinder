@@ -26,40 +26,41 @@ The old captcha solver may work but with lower accuracy.
 ## Config
 ```json
 {
-"Clients": [
-    {
-        "Token": "", // Your discord token
-        "ChannelID": "", // Channel ID for hunting
-        "FishChannelID": "", // Channel ID for fishing
-        "Hunting": true, // Disable/Enable Hunting
-        "Fishing": true, // Disable/Enable Fishing
-        "Balls": {
-            "Common": "pb",
-            "Uncommon": "pb",
-            "Rare": "gb",
-            "Super Rare": "ub",
-            "Legendary": "mb",
-            "Shiny": "mb",
-            "Shiny Event": "mb",
-            "Shiny Full-odds": "prb"
-        }, // Which ball to use for which rarity during hunting
-        "FishBalls": {
-            "Common": "pb",
-            "Uncommon": "gb",
-            "Rare": "ub",
-            "Super Rare": "ub",
-            "Legendary": "db",
-            "Shiny": "mb",
-            "Shiny Event": "mb",
-            "Shiny Full-odds": "prb"
-        }, // Which ball to use for which rarity during fishing
-        "AutoBuy": {
-            "pb": 50,
-            "gb": 25,
-            "ub": 5,
-            "mb": 1
-        } // How many balls to auto-buy when you have 0 left.
-    }
+    "Clients": [
+        {
+            "Token": "", // Your discord token
+            "ChannelID": "", // Channel ID for hunting
+            "FishChannelID": "", // Channel ID for fishing
+            "Hunting": true, // Disable/Enable Hunting
+            "Fishing": true, // Disable/Enable Fishing
+            "Balls": {
+                "Common": "pb",
+                "Uncommon": "pb",
+                "Rare": "gb",
+                "Super Rare": "ub",
+                "Legendary": "mb",
+                "Shiny": "mb",
+                "Shiny Event": "mb",
+                "Shiny Full-odds": "prb"
+            }, // Which ball to use for which rarity during hunting
+            "FishBalls": {
+                "Common": "pb",
+                "Uncommon": "gb",
+                "Rare": "ub",
+                "Super Rare": "ub",
+                "Legendary": "db",
+                "Shiny": "mb",
+                "Shiny Event": "mb",
+                "Shiny Full-odds": "prb"
+            }, // Which ball to use for which rarity during fishing
+            "AutoBuy": {
+                "pb": 50,
+                "gb": 25,
+                "ub": 5,
+                "mb": 1
+            } // How many balls to auto-buy when you have 0 left.
+        }
+    ]
 }
 ```
 - The Hunting and Fishing channels must be in different servers/guilds!
