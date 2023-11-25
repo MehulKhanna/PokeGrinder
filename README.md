@@ -16,10 +16,11 @@ An Auto-Grinding Self-Bot for the Discord Bot PokéMeow. As efficient as can be.
 - Amount of balls to buy can be specified in `config.json`.
 4. Auto Release Duplicates
 - Auto send ;r d after 40-100 catch
+5. Multiple Accounts
+- You can run multiple accounts at once!
 ## Upcoming Features
 1. Fishing
-3. Auto Release Duplicates
-4. Auto Checklist
+2. Auto Checklist
 ## Installating
 ### Without Executable (I dont have it for now.)
 1. Install Python 3.8 or higher.
