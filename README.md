@@ -40,5 +40,3 @@ To stop the program simply close the command prompt or press ctrl+c in the comma
 - I am of course not responsible for any ban you recieve for using this bot.
 - Please keep an eye on the bot. Do not be irresponsible if you don't want to get banned.
 - Please do not grind in public servers.
-#Want help?
-discord: lufy20105
