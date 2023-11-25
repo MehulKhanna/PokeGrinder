@@ -1,0 +1,28 @@
+{
+    "token": "",
+    "channel": 1231254124,
+    "captcha_solver": "True",
+    "save_captcha": "True",
+    "save_captcha_path": "D:\\sus\\aduma\\test\\captcha",
+    "auto-buy": "True",
+    "timermin": 8.5,
+    "timermax": 9.7,
+    "timeout": 3,
+    "delay": 0.7,
+    "rarities": {
+        "Common": "pb",
+        "Uncommon": "pb",
+        "Super Rare": "ub",
+        "Rare": "gb",
+        "Shiny Event": "pb",
+        "Shiny Full-odds": "mb",
+        "Shiny": "mb",
+        "Legendary": "mb"
+    },
+    "auto_buy": {
+        "Pokeballs": 100,
+        "Greatballs": 50,
+        "Ultraballs": 5,
+        "Masterballs": 1
+    }
+}

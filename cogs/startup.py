@@ -1,7 +1,7 @@
 import os
-from datetime import datetime
 from discord.ext import commands
 from discord.channel import TextChannel
+
 
 class Startup(commands.Cog):
     def __init__(self, client) -> None:
@@ -9,11 +9,10 @@ class Startup(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self) -> None:
+        self.client.title_set("Starting...")
         os.system("cls" if os.name == "nt" else "clear")
 
-        print("\033[1;33m PokeGrinder is ready to grind!")
-        print(f"\033[1;33m Username: {self.client.user.name}" f"#{self.client.user.discriminator}")
-
+        print("PokeGrinder is ready to grind!")
         coolest_ascii_font = """\033[1;33m
        __________       __            ________      .__            .___            
        \______   \____ |  | __ ____  /  _____/______|__| ____    __| _/___________ 
@@ -23,8 +22,6 @@ class Startup(commands.Cog):
                             \/    \/        \/              \/      \/    \/       
         """
         print(coolest_ascii_font)
-
-        self.client.start_time = datetime.now().replace(microsecond=0)
         channel: TextChannel = self.client.get_channel(self.client.channel)
 
         commands = [
@@ -37,6 +34,7 @@ class Startup(commands.Cog):
         await commands[0]()
         self.client.pokemon = commands[0]
         self.client.shop_buy = commands[1].children[1]
+
 
 async def setup(client: commands.Bot) -> None:
     await client.add_cog(Startup(client))

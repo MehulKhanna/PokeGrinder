@@ -4,4 +4,5 @@ PyYAML
 seaborn
 matplotlib
 opencv-python
+ultralytics
 git+https://github.com/dolfies/discord.py-self.git

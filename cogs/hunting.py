@@ -1,7 +1,7 @@
-import asyncio, os
+import asyncio, os, random, requests
 from datetime import datetime
 from discord.ext import commands
-from discord import InvalidData, HTTPException
+from discord.errors import InvalidData, HTTPException
 
 from discord import (
     Message,
@@ -39,7 +39,6 @@ ball_strings = [
     "Masterballs: 0",
 ]
 
-
 async def timer(command, timer) -> None:
     await asyncio.sleep(timer)
     await command()
@@ -48,7 +47,7 @@ async def timer(command, timer) -> None:
 class Hunting(commands.Cog):
     def __init__(self, client) -> None:
         self.client: commands.Bot = client
-        self.catches, self.encounters = 0, 0
+        self.catches, self.encounters, self.RDcap = 0, 0, 0
         self.timer, self.delay, self.timeout, self.auto_buy = (
             client.timer,
             client.delay,
@@ -76,7 +75,12 @@ class Hunting(commands.Cog):
             asyncio.create_task(timer(self.client.pokemon, self.timer))
             return
 
-        if "wait" in message.content:
+        if "spawned" in message.content:
+            await asyncio.sleep(4)
+            await self.client.pokemon()
+            return
+
+        if "Please wait" in message.content:
             await asyncio.sleep(2)
             await self.client.pokemon()
             return
@@ -88,7 +92,6 @@ class Hunting(commands.Cog):
             await asyncio.sleep(3)
             os._exit(0)
             
-
         elif "captcha" in message.embeds[0].description:
             print("\n\033[1;31m A captcha has appeared!!")
             if self.client.config["captcha_solver"] != "True":
@@ -99,17 +102,26 @@ class Hunting(commands.Cog):
             print("\033[1;33m Solving the captcha...")
 
             image = message.embeds[0].image.url
-            await self.client.get_channel(self.client.cap_channel).send(image)
+            if self.client.config["save_captcha"] == "True":
+                try:
+                    response = requests.get(image)
+                    response.raise_for_status()
+                except requests.exceptions.RequestException as e:
+                    print(f"Error: {e}")
+                    return
+                path = self.client.save_captcha_path
+                if not os.path.exists(path):
+                    os.makedirs(path)
+                filename = filename = os.path.join(path, f"{datetime.now().strftime('%Y-%m-%d_%H-%M-%S ')}{message.id}.png")
+                with open(filename, 'wb') as file:
+                    file.write(response.content)
+                print(f"\033[1;32m Captcha saved!")
             answer = self.client.captcha_solver(image)
-
             try:
                 print('\033[1;33m PyTorch answer: ', answer)
-                await self.client.get_channel(self.client.channel).send(answer)
-
-
+                await self.client.get_channel(self.client.channel).send(answer, delete_after=2)
             except InvalidData:
                 pass
-
             return
         self.encounters += 1
 
@@ -155,11 +167,18 @@ class Hunting(commands.Cog):
         asyncio.create_task(timer(self.client.pokemon, self.timer))
         if "caught" in after.embeds[0].description:
             self.catches += 1
+            self.RDcap += 1
 
-        current_time = datetime.now().replace(microsecond=0)
+        print(f"{list(colors.values())[index]} | \033[1;0m"f"Encounters: {self.encounters} | "f"Catches: {self.catches}")
+        self.client.title_set(f"Encounters: {self.encounters} | "f"Catches: {self.catches} | "f"User: {self.client.user.name}")
 
-        print(f"{list(colors.values())[index]} | \033[1;0m"f"Time Elapsed: {current_time - self.client.start_time} | "f"Encounters: {self.encounters} | "f"Catches: {self.catches}")
-        self.client.title_set(f"Time Elapsed: {current_time - self.client.start_time} | "f"Encounters: {self.encounters} | "f"Catches: {self.catches}")
+        if self.RDcap >= 40:
+            RDcap = random.randint(40,100)
+            if self.RDcap >= RDcap:
+                await asyncio.sleep(3 + self.delay)
+                await self.client.get_channel(self.client.channel).send(";r d", delete_after=2)
+                print(f"\n\033[1m Release Duplicates after {self.RDcap} caught\n")
+                self.RDcap = 0
 
         if self.client.config["auto-buy"] != "True":
             return
@@ -184,17 +203,30 @@ class Hunting(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message_edit(self, before, message: Message) -> None:
-        if message.embeds != []:
+        if message.embeds != [] and message.channel.id == self.client.channel:
             try:
                 if "incorrect" in message.embeds[0].description:
                     print("\033[1;31m !!!WRONG ANSWER!!!")
                     print("\033[1;33m Retry...")
                     image = message.embeds[0].image.url
-                    await self.client.get_channel(self.client.cap_channel).send(image)
+                    if self.client.config["save_captcha"] == "True":
+                        try:
+                            response = requests.get(image)
+                            response.raise_for_status()
+                        except requests.exceptions.RequestException as e:
+                            print(f"Error: {e}")
+                            return
+                        path = self.client.save_captcha_path
+                        if not os.path.exists(path):
+                            os.makedirs(path)
+                        filename = filename = os.path.join(path, f"{datetime.now().strftime('%Y-%m-%d_%H-%M-%S ')}{message.id}.png")
+                        with open(filename, 'wb') as file:
+                            file.write(response.content)
+                        print(f"\033[1;32m Captcha saved!")
                     answer = self.client.captcha_solver(image)
                     try:
                         print('\033[1;33m Pytorch answer: ', answer)
-                        await self.client.get_channel(self.client.channel).send(answer)
+                        await self.client.get_channel(self.client.channel).send(answer, delete_after=2)
                         return
                     except:
                         return
@@ -205,6 +237,7 @@ class Hunting(commands.Cog):
             or "continue playing!" not in message.content):
             return
         print("\033[1;32m The captcha has been solved!\n")
+
 
         await asyncio.sleep(2)
         await self.client.pokemon()
