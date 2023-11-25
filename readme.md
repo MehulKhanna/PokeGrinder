@@ -1,7 +1,8 @@
 # PokeGrinder-V2
 An Auto-Grinding Self-Bot for the Discord Bot PokéMeow. As efficient as can be.
 
-![PokeGrinder](assets/PokeGrinder.jpg)
+![PokeGrinder](https://github.com/lufy20106/PokeGrinder-V2-python/assets/144891766/7c9d8aec-3290-4e87-ae5b-5e7d45b60a67)
+
 
 ## Supported Features
 1. Hunting
