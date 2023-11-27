@@ -70,6 +70,7 @@ The old captcha solver may work but with lower accuracy.
 - Use different channels for each account.
 - Hunting and fishing for different accounts can be in the same server.
 - The Hunting and Fishing channels for the same account must be in different servers/guilds.
+- Please try grinding in servers with only PokeMeow bot and without any other bots if you face issues.
 
 ## Get Token ?
 
