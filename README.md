@@ -9,7 +9,7 @@ An Auto-Grinding Self-Bot for the Discord Bot PokéMeow. As efficient as can be.
 2. Captcha Solver
 - Solves captchas automatically under 2-3 seconds (depending on your CPU).
 - Has an accuracy of ~98.7% with 290 layers and 20,889,303 parameters.
-- Retry when incorrect so cant almost imposible to get ban
+- Retry when incorrect so almost imposible to get ban
 - Free forever!
 3. Auto Buy Balls
 - Buys balls automatically when you run out of them!
@@ -22,7 +22,7 @@ An Auto-Grinding Self-Bot for the Discord Bot PokéMeow. As efficient as can be.
 1. Fishing
 2. Auto Checklist
 ## Installating
-### Without Executable (I dont have it for now.)
+### Source (No EXE.)
 1. Install Python 3.8 or higher.
 2. Install Git from https://git-scm.com/downloads
 3. Open cmd run `git clone https://github.com/lufy20106/PokeGrinder-V2-python`
