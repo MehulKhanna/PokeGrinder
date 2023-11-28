@@ -1,7 +1,7 @@
 import asyncio, os, random, requests
 from datetime import datetime
 from discord.ext import commands
-from discord.errors import InvalidData, HTTPException
+import discord
 
 from discord import (
     Message,
@@ -102,6 +102,7 @@ class Hunting(commands.Cog):
             print("\033[1;33m Solving the captcha...")
 
             image = message.embeds[0].image.url
+            #await self.client.get_channel(self.client.cap_channel).send(image)
             if self.client.config["save_captcha"] == "True":
                 try:
                     response = requests.get(image)
@@ -120,7 +121,7 @@ class Hunting(commands.Cog):
             try:
                 print('\033[1;33m PyTorch answer: ', answer)
                 await self.client.get_channel(self.client.channel).send(answer, delete_after=2)
-            except InvalidData:
+            except discord.errors.InvalidData:
                 pass
             return
         self.encounters += 1
@@ -132,43 +133,44 @@ class Hunting(commands.Cog):
         ][0]
 
         ball = list((self.client.config["rarities"]).values())[index]
-
-        button: Button = [
-            component
-            for component in message.components[0].children
-            if component.custom_id == ball
-        ][0]
-
         try:
-            await asyncio.sleep(self.delay)
-            await button.click()
+            button: Button = [
+                component
+                for component in message.components[0].children
+                if component.custom_id == ball
+            ][0]
 
-        except InvalidData:
-            pass
-
-        try:
-            before, after = await self.client.wait_for(
-                "message_edit",
-                check=lambda before, after: before == message,
-                timeout=self.timeout,
-            )
-            after: Message
-
-        except asyncio.TimeoutError:
             try:
+                await asyncio.sleep(self.delay)
                 await button.click()
 
-            except HTTPException:
+            except discord.errors.InvalidData:
                 pass
 
-            asyncio.create_task(timer(self.client.pokemon, self.timer))
-            return
+            try:
+                before, after = await self.client.wait_for(
+                    "message_edit",
+                    check=lambda before, after: before == message,
+                    timeout=self.timeout,
+                )
+                after: Message
 
+            except asyncio.TimeoutError:
+                try:
+                    await button.click()
+
+                except discord.errors.HTTPException:
+                    pass
+
+                asyncio.create_task(timer(self.client.pokemon, self.timer))
+                return
+        except IndexError:
+            return
         asyncio.create_task(timer(self.client.pokemon, self.timer))
         if "caught" in after.embeds[0].description:
             self.catches += 1
             self.RDcap += 1
-
+        
         print(f"{list(colors.values())[index]} | \033[1;0m"f"Encounters: {self.encounters} | "f"Catches: {self.catches}")
         self.client.title_set(f"Encounters: {self.encounters} | "f"Catches: {self.catches} | "f"User: {self.client.user.name}")
 
@@ -180,26 +182,28 @@ class Hunting(commands.Cog):
                 print(f"\n\033[1m Release Duplicates after {self.RDcap} caught\n")
                 self.RDcap = 0
 
-        if self.client.config["auto-buy"] != "True":
-            return
+        if self.client.config["auto-buy"] == "True":
+            index = [
+                index
+                for index, string in enumerate(ball_strings)
+                if string in (after.embeds[0].footer.text).replace(" :", ":")
+            ]
 
-        index = [
-            index
-            for index, string in enumerate(ball_strings)
-            if string in (after.embeds[0].footer.text).replace(" :", ":")
-        ]
+            if index == []:
+                return
 
-        if index == []:
-            return
+            index = index[0]
+            string = list(self.auto_buy.keys())[index]
+            amount = list(self.auto_buy.values())[index]
 
-        index = index[0]
-        string = list(self.auto_buy.keys())[index]
-        amount = list(self.auto_buy.values())[index]
+            if amount > 0:
+                await asyncio.sleep(4 + self.delay)
+                await self.client.shop_buy(item=f"{index + 1}", amount=amount)
+                print(f"\n\033[1m Bought {amount} {string}!\n")
+                return
+            else:
+                return
 
-        await asyncio.sleep(4 + self.delay)
-        await self.client.shop_buy(item=f"{index + 1}", amount=amount)
-
-        print(f"\n\033[1m Bought {amount} {string}!\n")
 
     @commands.Cog.listener()
     async def on_message_edit(self, before, message: Message) -> None:
@@ -223,6 +227,7 @@ class Hunting(commands.Cog):
                         with open(filename, 'wb') as file:
                             file.write(response.content)
                         print(f"\033[1;32m Captcha saved!")
+                    #await self.client.get_channel(self.client.cap_channel).send(image)
                     answer = self.client.captcha_solver(image)
                     try:
                         print('\033[1;33m Pytorch answer: ', answer)
