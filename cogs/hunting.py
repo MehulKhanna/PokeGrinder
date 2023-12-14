@@ -102,25 +102,31 @@ class Hunting(commands.Cog):
             print("\033[1;33m Solving the captcha...")
 
             image = message.embeds[0].image.url
-            #await self.client.get_channel(self.client.cap_channel).send(image)
+            answer = self.client.captcha_solver(image)
             if self.client.config["save_captcha"] == "True":
                 try:
-                    response = requests.get(image)
-                    response.raise_for_status()
-                except requests.exceptions.RequestException as e:
-                    print(f"Error: {e}")
-                    return
-                path = self.client.save_captcha_path
-                if not os.path.exists(path):
-                    os.makedirs(path)
-                filename = filename = os.path.join(path, f"{datetime.now().strftime('%Y-%m-%d_%H-%M-%S ')}{message.id}.png")
-                with open(filename, 'wb') as file:
-                    file.write(response.content)
-                print(f"\033[1;32m Captcha saved!")
-            answer = self.client.captcha_solver(image)
+                    try:
+                        response = requests.get(image)
+                        response.raise_for_status()
+                    except requests.exceptions.RequestException as e:
+                        print(f"Error: {e}")
+                        return
+                    path = self.client.save_captcha_path
+                    if not os.path.exists(path):
+                        os.makedirs(path)
+                    filename = os.path.join(path, f"{answer}.png")
+                    count = 1
+                    while os.path.exists(filename):
+                        count += 1
+                        filename = os.path.join(path, f"{answer}_{count}.png")
+                    with open(filename, 'wb') as file:
+                        file.write(response.content)
+                    print(f"\033[1;32m Captcha saved!")
+                except:
+                    print(" Captcha not saved")
             try:
                 print('\033[1;33m PyTorch answer: ', answer)
-                await self.client.get_channel(self.client.channel).send(answer, delete_after=2)
+                await self.client.get_channel(self.client.channel).send(answer)
             except discord.errors.InvalidData:
                 pass
             return
@@ -178,7 +184,7 @@ class Hunting(commands.Cog):
             RDcap = random.randint(40,100)
             if self.RDcap >= RDcap:
                 await asyncio.sleep(3 + self.delay)
-                await self.client.get_channel(self.client.channel).send(";r d", delete_after=2)
+                await self.client.get_channel(self.client.channel).send(";r d")
                 print(f"\n\033[1m Release Duplicates after {self.RDcap} caught\n")
                 self.RDcap = 0
 
@@ -215,23 +221,30 @@ class Hunting(commands.Cog):
                     image = message.embeds[0].image.url
                     if self.client.config["save_captcha"] == "True":
                         try:
-                            response = requests.get(image)
-                            response.raise_for_status()
-                        except requests.exceptions.RequestException as e:
-                            print(f"Error: {e}")
-                            return
-                        path = self.client.save_captcha_path
-                        if not os.path.exists(path):
-                            os.makedirs(path)
-                        filename = filename = os.path.join(path, f"{datetime.now().strftime('%Y-%m-%d_%H-%M-%S ')}{message.id}.png")
-                        with open(filename, 'wb') as file:
-                            file.write(response.content)
-                        print(f"\033[1;32m Captcha saved!")
-                    #await self.client.get_channel(self.client.cap_channel).send(image)
+                            try:
+                                response = requests.get(image)
+                                response.raise_for_status()
+                            except requests.exceptions.RequestException as e:
+                                print(f"Error: {e}")
+                                return
+                            path = self.client.save_captcha_path
+                            if not os.path.exists(path):
+                                os.makedirs(path)
+                            filename = os.path.join(path, f"{answer}.png")
+                            count = 1
+                            while os.path.exists(filename):
+                                count += 1
+                                filename = os.path.join(path, f"{answer}_{count}.png")
+
+                            with open(filename, 'wb') as file:
+                                file.write(response.content)
+                            print(f"\033[1;32m Captcha saved!")
+                        except:
+                            print(" Captcha not saved")
                     answer = self.client.captcha_solver(image)
                     try:
                         print('\033[1;33m Pytorch answer: ', answer)
-                        await self.client.get_channel(self.client.channel).send(answer, delete_after=2)
+                        await self.client.get_channel(self.client.channel).send(answer)
                         return
                     except:
                         return
