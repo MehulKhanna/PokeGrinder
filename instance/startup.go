@@ -79,6 +79,8 @@ func StartSession(client Client, group *sync.WaitGroup) {
 	Clients[session.Token] = &client
 	session.State.MaxMessageCount = 1000
 	client.Encounters, client.Catches = 0, 0
+	session.AddHandler(CaptchaMessage)
+	session.AddHandler(CaptchaMessageUpdate)
 
 	if client.Fishing {
 		session.AddHandler(FishSpawn)

@@ -3,6 +3,8 @@ package discord
 import (
 	"fmt"
 	"github.com/bwmarrin/discordgo"
+	"net/http"
+	"os"
 	"strconv"
 	"time"
 )
@@ -38,7 +40,13 @@ func SendCommand(
 		Nonce: strconv.FormatInt(Snowflake(), 10),
 	}
 
-	_, err := session.Request("POST", "https://discord.com/api/v9/interactions", data)
+	_, err := http.Get("http://127.0.0.1:8000/")
+	if err != nil {
+		fmt.Println("error while connecting to captcha solver API")
+		os.Exit(69)
+	}
+
+	_, err = session.Request("POST", "https://discord.com/api/v9/interactions", data)
 	if err != nil {
 		fmt.Println(err)
 	}

@@ -5,7 +5,7 @@
       "ChannelID": "",
       "FishChannelID": "",
       "Hunting": true,
-      "Fishing": true,
+      "Fishing": false,
       "Balls": {
         "Common": "pb",
         "Uncommon": "pb",
@@ -37,8 +37,8 @@
       "Token": "",
       "ChannelID": "",
       "FishChannelID": "",
-      "Hunting": true,
-      "Fishing": true,
+      "Hunting": false,
+      "Fishing": false,
       "Balls": {
         "Common": "pb",
         "Uncommon": "pb",

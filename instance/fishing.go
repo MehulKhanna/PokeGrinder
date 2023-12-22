@@ -87,7 +87,7 @@ func FishSpawn(session *discordgo.Session, message *discordgo.MessageCreate) {
 		))
 
 		ch := make(chan *discordgo.MessageUpdate)
-		go WaitForUpdate(93*time.Second, session, message, ch)
+		go WaitForSolve(93*time.Second, session, message, ch)
 		update := <-ch
 
 		if update == nil {
@@ -95,7 +95,7 @@ func FishSpawn(session *discordgo.Session, message *discordgo.MessageCreate) {
 				"%s | Timed out while waiting for the captcha to be solved!",
 				session.State.User.Username,
 			))
-		} else if strings.Contains(update.Content, "continue playing") {
+		} else {
 			fmt.Println(fmt.Sprintf(
 				"%s | The captcha has been solved!",
 				session.State.User.Username,

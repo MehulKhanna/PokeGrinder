@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"main/instance"
+	"net/http"
 	"os"
 	"os/signal"
 	"sync"
@@ -17,8 +18,14 @@ type Config struct {
 var config Config
 
 func init() {
+	_, err := http.Get("http://127.0.0.1:8000/")
+	if err != nil {
+		fmt.Println("error while connecting to captcha solver API")
+		os.Exit(69)
+	}
+
 	configFile, _ := os.ReadFile("config.json")
-	err := json.Unmarshal(configFile, &config)
+	err = json.Unmarshal(configFile, &config)
 	if err != nil {
 		fmt.Println("error when unmarshalling config,", err)
 		return
