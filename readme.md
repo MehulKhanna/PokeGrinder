@@ -98,7 +98,7 @@ console.log(`%cYou now have your token in the clipboard!`, 'font-size: 16px');
 ```
 
 ## Requirements
-- Requires Python 3.8+ to be installed.
+- Requires Python 3.8+ (Not Python 3.12) to be installed.
 - Requires FastAPI, Uvicorn and Ultralytics to be installed :-
   - `pip install fastapi`
   - `pip install "uvicorn[standard]"`
@@ -113,6 +113,7 @@ console.log(`%cYou now have your token in the clipboard!`, 'font-size: 16px');
 
 2. ##### Grinder
 - Download the `config.json` file and the `fishes.json` file.
+- Make sure there are no bots other than PokeMeow in the server you are grinding in.
 - Download the executable file for your operating system from the release tab.
 - The `config.json`, `fishes.json` and the executable must be in the same folder.
 - Run the executable, and the grinder should start.
