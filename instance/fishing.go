@@ -63,13 +63,7 @@ func FishCommandSend(session *discordgo.Session, channel *discordgo.Channel) {
 
 func FishSpawn(session *discordgo.Session, message *discordgo.MessageCreate) {
 	client := Clients[session.Token]
-
 	if !check(session, message, "fish spawn") {
-		return
-	}
-	err := session.State.MessageAdd(message.Message)
-	if err != nil {
-		fmt.Println(session.State.User.Username, "error while adding message to state,", err)
 		return
 	}
 
@@ -125,12 +119,6 @@ func FishSpawn(session *discordgo.Session, message *discordgo.MessageCreate) {
 		return
 	}
 
-	err = session.State.MessageAdd(update.Message)
-	if err != nil {
-		fmt.Println(session.State.User.Username, "error while adding message to state,", err)
-		return
-	}
-
 	if strings.Contains(update.Embeds[0].Description, "Not even a nibble...") {
 		time.AfterFunc(23*time.Second, func() {
 			FishCommandSend(session, client.FishChannel)
@@ -153,12 +141,6 @@ func FishSpawn(session *discordgo.Session, message *discordgo.MessageCreate) {
 			"%s | Timed out while waiting for the fish spawn to be updated 2.",
 			session.State.User.Username,
 		))
-	}
-
-	err = session.State.MessageAdd(update.Message)
-	if err != nil {
-		fmt.Println(session.State.User.Username, "error while adding message to state,", err)
-		return
 	}
 
 	if !strings.Contains(update.Embeds[0].Description, "fished out a wild") {

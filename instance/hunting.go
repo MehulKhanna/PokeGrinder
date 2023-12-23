@@ -32,6 +32,10 @@ func WaitForUpdate(
 	ch chan *discordgo.MessageUpdate,
 ) {
 	handler := func(session *discordgo.Session, update *discordgo.MessageUpdate) {
+		if update.BeforeUpdate == nil {
+			return
+		}
+
 		if update.BeforeUpdate.ID == message.Message.ID {
 			ch <- update
 		}
@@ -51,6 +55,10 @@ func WaitForSolve(
 	ch chan *discordgo.MessageUpdate,
 ) {
 	handler := func(session *discordgo.Session, update *discordgo.MessageUpdate) {
+		if update.BeforeUpdate == nil {
+			return
+		}
+
 		if update.BeforeUpdate.ID == message.Message.ID &&
 			strings.Contains(message.Content, "continue playing") {
 			ch <- update
@@ -99,13 +107,7 @@ func PokemonCommandSend(session *discordgo.Session, channel *discordgo.Channel) 
 
 func PokemonMessage(session *discordgo.Session, message *discordgo.MessageCreate) {
 	client := Clients[session.Token]
-
 	if !check(session, message, "pokemon") {
-		return
-	}
-	err := session.State.MessageAdd(message.Message)
-	if err != nil {
-		fmt.Println(session.State.User.Username, "error while adding message to state,", err)
 		return
 	}
 

@@ -74,8 +74,6 @@ func CaptchaMessageUpdate(session *discordgo.Session, message *discordgo.Message
 		}
 	}
 
-	_ = session.State.MessageAdd(message.Message)
-
 	resp, err := http.Get("http://127.0.0.1:8000/solve/" + message.Embeds[0].Image.URL)
 	if err != nil {
 		fmt.Println("Unable to contact the solver API! Please solve the captcha yourself!")
