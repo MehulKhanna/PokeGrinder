@@ -2,6 +2,7 @@
     "token": "",
     "channel": 1231254124,
     "captcha_solver": "True",
+    "captcha_ver": "3",
     "save_captcha": "True",
     "save_captcha_path": "D:\\sus\\aduma\\test\\captcha",
     "auto-buy": "True",
