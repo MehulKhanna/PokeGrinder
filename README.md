@@ -8,7 +8,6 @@ An Auto-Grinding Self-Bot for the Discord Bot PokéMeow. As efficient as can be.
 - Logs elapsed time, encounters and catches.
 2. Captcha Solver
 - Solves captchas automatically under 2-3 seconds (depending on your CPU).
-- Has an accuracy of ~98.7% with 290 layers and 20,889,303 parameters.
 - Retry when incorrect so almost imposible to get ban
 - Free forever!
 3. Auto Buy Balls
