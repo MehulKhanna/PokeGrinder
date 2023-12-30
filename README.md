@@ -23,7 +23,7 @@ An Auto-Grinding Self-Bot for the Discord Bot PokéMeow. As efficient as can be.
 ## Installating
 ### Source (No EXE.)
 1. Install Python 3.8 or higher.
-2. Install Git from https://git-scm.com/downloads
+2. Install Git from [here](https://git-scm.com/downloads)
 3. Open cmd run `git clone https://github.com/lufy20106/PokeGrinder-V2-python`
 6. Inside of the repository run command `python -m pip install -r requirements.txt`
 7. Create a grinder by open `new instances.bat`
