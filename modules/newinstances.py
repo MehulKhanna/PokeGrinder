@@ -1,50 +1,30 @@
-import shutil
+import shutil, os
+def copy_and_modify_files(new_name):
 
-def copy_and_modify_files():
-    # Define the base file names
-    main_file = '.\\assets\\source\\main.py'
-    config_file = '.\\assets\\source\\config.json'
-    start_bat_file = '.\\assets\\source\\start.bat'
-    counter_file_path = '.\\assets\\instancescount'
-
-    # Check if the counter file exists, and create it if not
-    try:
-        with open(counter_file_path, 'r'):
-            # The file exists, do nothing
-            pass
-    except FileNotFoundError:
-        # The file doesn't exist, create it with the initial value '0'
-        with open(counter_file_path, 'w') as new_counter_file:
-            new_counter_file.write('0')
-
-    # Read the current counter value
-    with open(counter_file_path, 'r') as counter_file:
-        counter = int(counter_file.read().strip())
-
-    # Increment the counter for the next run
-    counter += 1
+    # Define file paths based on the provided name
+    main_file = f'.\\assets\\source\\main.py'
+    config_file = f'.\\assets\\source\\config.json'
+    start_bat_file = f'.\\assets\\source\\start.bat'
 
     # Define new file names with the updated counter
-    new_main_file = f'main{counter}.py'
-    new_config_file = f'!config{counter}.json'
-    new_start_bat_file = f'!start{counter}.bat'
+    new_main_file = f'main_{new_name}.py'
+    new_config_file = f'config_{new_name}.json'
+    new_start_bat_file = f'!start_{new_name}.bat'
+    
+    for directory in ['instances', 'configs']:
+        if not os.path.exists(directory):
+            os.makedirs(directory)
 
     # Copy the main.py file
-    shutil.copy(main_file, new_main_file)
-
-    # Modify the first line of the new main.py copy
-    modify_first_line(new_main_file, f'configname = "{new_config_file}"')
+    shutil.copy(main_file, f"instances/{new_main_file}")
+    modify_first_line(f"instances/{new_main_file}", f'configname = "{new_config_file}"')
 
     # Copy the config.py file with the new name
-    shutil.copy(config_file, new_config_file)
+    shutil.copy(config_file, f'configs/{new_config_file}')
 
     # Copy and modify the start.bat file
     shutil.copy(start_bat_file, new_start_bat_file)
-    modify_first_line(new_start_bat_file, f'python {new_main_file}')
-
-    # Save the updated counter value
-    with open(counter_file_path, 'w') as counter_file:
-        counter_file.write(str(counter))
+    modify_first_line(new_start_bat_file, f'python instances/{new_main_file}')
 
 def modify_first_line(file_path, new_line):
     # Read the content of the file
@@ -59,4 +39,4 @@ def modify_first_line(file_path, new_line):
         file.writelines(lines)
 
 if __name__ == '__main__':
-    copy_and_modify_files()
+    copy_and_modify_files(input("Name new instances: "))

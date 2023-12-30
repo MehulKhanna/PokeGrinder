@@ -14,7 +14,7 @@ font1 = """
                             \/    \/        \/              \/      \/    \/
 """
 print(font1)
-with open(f"config/{configname}") as config_file:
+with open(f"configs/{configname}") as config_file:
     config = json.load(config_file)
 try:
     from ultralytics import YOLO

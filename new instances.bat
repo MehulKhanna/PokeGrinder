@@ -1,1 +1,1 @@
-python .\modules\newinstances.py
+python modules/newinstances.py
