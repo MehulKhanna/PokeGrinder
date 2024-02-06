@@ -24,6 +24,7 @@ The logs may look different for you depending on your terminal config ;).
 - Retries for the specified number of times in the config.
 - About 0.0024% chance of getting banned with 3 retries.
 - About 0.00016% chance of getting banned with 4 retries.
+- You will probably get banned after solving 41,666 captchas!
 
 4. Auto Buy Balls
 
