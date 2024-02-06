@@ -1,127 +1,134 @@
 # PokeGrinder V2
-An Auto-Grinding Self-Bot for the Discord Bot PokéMeow. As efficient as can be.
-Now in Golang for better handling of interactions.
+
+A robust and efficient discord self-bot for automating Pokémeow with a free captcha solver.
+
+![image](/assets/image.png)
 
 ## Supported Features
+
 1. Hunting
+
 - Encounters Pokémon and uses a ball depending on the rarity of the Pokémon.
-- Stops if a captcha appears and automatically continues after the captcha is solved.
+- Uses a ball of lower price if missing the specified ball in the config.
 
 2. Fishing
-- Spawns a fish, pulls the fishing rod and uses a ball depending on the rarity of the Pokémon.
-- It has the data for every fish's rarity, so it knows the rarity even though Pokémeow doesn't show it.
+
+- Spawns a fish, pulls the fishing rod and uses a ball depending on the rarity of the fish.
+- Knows the rarity of each and every fish with the help of a json file.
 
 3. Captcha Solver
-- Automatically solves captcha.
-- Retries if incorrect upto 3 retries (total 4 attempts).
+
+- Automatically solves captcha with about 93% accuracy.
+- Retries for the specified number of times in the config.
+- About 0.0024% chance of getting banned with 3 retries.
+- About 0.00016% chance of getting banned with 4 retries.
 
 4. Auto Buy Balls
-- Buys balls automatically when you run out of them (works with both hunting and fishing)!
-- Number of balls to buy can be specified in `config.json`.
+
+- Auto buys balls when none are left.
+- Amount of balls to buy can be specified in the config.
+- Works while both hunting and fishing.
 
 5. Multiple Accounts
-- You can run multiple accounts at once!
+
+- Allows you to run as many accounts as you want.
+
+6. Logging
+
+- Logs encounters, catches as well as coins earned.
+- Displays a table containing stats for all accounts with time elapsed.
+- Frequency of logging can be changed in the config.
 
 ## Upcoming Features
-1. Logging Tables
-- Format logs in tables for multiple accounts.
+
+1. Quests
+2. Eggs
 
 ## Config
-```json
+
+```
 {
-    "Clients": [
-        {
-            "Token": "", // Your discord token
-            "ChannelID": "", // Channel ID for hunting
-            "FishChannelID": "", // Channel ID for fishing
-            "Hunting": true, // Disable/Enable Hunting
-            "Fishing": true, // Disable/Enable Fishing
-            "Balls": {
-                "Common": "pb",
-                "Uncommon": "pb",
-                "Rare": "gb",
-                "Super Rare": "ub",
-                "Legendary": "mb",
-                "Shiny": "mb",
-                "Shiny Event": "mb",
-                "Shiny Full-odds": "prb"
-            }, // Which ball to use for which rarity during hunting
-            "FishBalls": {
-                "Common": "pb",
-                "Uncommon": "gb",
-                "Rare": "ub",
-                "Super Rare": "ub",
-                "Legendary": "db",
-                "Shiny": "mb",
-                "Shiny Event": "mb",
-                "Shiny Full-odds": "prb"
-            }, // Which ball to use for which rarity during fishing
-            "AutoBuy": {
-                "pb": 50,
-                "gb": 25,
-                "ub": 5,
-                "mb": 1
-            } // How many balls to auto-buy when you have 0 left.
-        }
-        // You can add more clients after this with the same type of config as above
-    ]
+  "CaptchaSolver": true,
+  // Automatically solve captcha true/false
+  "LoggingInterval": 10,
+  // Interval between updating log table in seconds
+  "": {
+    // Token between the double quotes
+    "HuntingChannel": 0,
+    // Hunting Channel ID, 0 to disable hunting
+    "FishingChannel": 0,
+    // Fishing Channel ID, 0 to disable fishing
+    "Balls": {
+      // Which ball for which rarity (hunting)
+      "Common": "pb",
+      "Uncommon": "pb",
+      "Rare": "gb",
+      "Super Rare": "ub",
+      "Legendary": "mb",
+      "Shiny": "mb",
+      "Shiny Event": "mb",
+      "Shiny Full-odds": "prb"
+    },
+    "FishBalls": {
+      // Which ball for which rarity (fishing)
+      "Common": "pb",
+      "Uncommon": "gb",
+      "Rare": "ub",
+      "Super Rare": "ub",
+      "Legendary": "db",
+      "Shiny": "mb",
+      "Golden": "mb"
+    },
+    "AutoBuy": {
+      // How many balls to buy when none left, set 0 to disable
+      "pb": 50,
+      "gb": 25,
+      "ub": 5,
+      "mb": 1
+    },
+    "RetryCooldown": 1,
+    // Time to wait in seconds after "Please wait" messages
+    "HuntingCooldown": 8.4,
+    // Time between /pokemon commands
+    "FishingCooldown": 22.4,
+    // Time between /fish spawn commands
+    "CaptchaRetries": 3
+    // How may times to retry after one incorrect captcha
+  },
+  // Add multiple accounts below :-
+  "Second Token": {...}
 }
 ```
+
 - Use different channels for each account.
-- Hunting and fishing for different accounts can be in the same server.
-- The Hunting and Fishing channels for the same account must be in different servers/guilds.
-- Please try grinding in servers with only PokeMeow bot and without any other bots if you face issues.
+- Fishing and Hunting channels may not be in the same server.
+- Grind in servers with Pokémeow only and no other bot.
 
-## Get Token ?
+## Get Token?
 
-<strong>Run code (Discord Console - [Ctrl + Shift + I])</strong>
-
-```js
-window.webpackChunkdiscord_app.push([
-  [Math.random()],
-  {},
-  req => {
-    for (const m of Object.keys(req.c)
-      .map(x => req.c[x].exports)
-      .filter(x => x)) {
-      if (m.default && m.default.getToken !== undefined) {
-        return copy(m.default.getToken());
-      }
-      if (m.getToken !== undefined) {
-        return copy(m.getToken());
-      }
-    }
-  },
-]);
-console.log('%cWorked!', 'font-size: 50px');
-console.log(`%cYou now have your token in the clipboard!`, 'font-size: 16px');
-```
+[How to Find Your Discord Token](https://youtu.be/YEgFvgg7ZPI?si=bHkK506fdRibR8QI)
 
 ## Requirements
-- Requires Python 3.8+ (Not Python 3.12) to be installed.
-- Requires FastAPI, Uvicorn and Ultralytics to be installed :-
-  - `pip install fastapi`
-  - `pip install "uvicorn[standard]"`
-  - `pip install ultralytics`
+
+- Python 3.8 or higher is required.
+- `python -m pip install -r requirements.txt`
 
 ## Launching
-1. ##### Captcha Solver
-- Download the `Solver1850.pt` file from releases.
-- Download the `CaptchaSolver.py` file from the repository.
-- Place the above two files in the same folder.
-- Run the command `uvicorn CaptchaSolver:app --reload` in the terminal while in that folder.
 
-2. ##### Grinder
-- Download the `config.json` file and the `fishes.json` file.
-- Make sure there are no bots other than PokeMeow in the server you are grinding in.
-- Download the executable file for your operating system from the release tab.
-- The `config.json`, `fishes.json` and the executable must be in the same folder.
-- Run the executable, and the grinder should start.
+1. Clone the repository.
+2. Download `Solver1850.pt` from releases and place it into the assets folder.
+3. Run the `main.py` file from the terminal.
 
 ## Stopping
-To stop the program simply close the command prompt or press CTRL+C in the command prompt.
+
+Press `CTRL+C` while in the terminal.
 
 ## Disclaimer ⚠️
-- I am of course not responsible for any ban you receive for using this bot.
-- Please keep an eye on the bot. Do not be irresponsible if you don't want to get banned.
+
+- I am not responsible for any bans you get.
+- Please always keep an eye on the bot.
 - Please do not grind on public servers.
+
+
+- Sometimes it will not use a ball (extremely rare). This is an issue with discord not registering button clicks
+  sometimes. This can not be fixed until a workaround is found.

@@ -1,0 +1,83 @@
+{
+  "CaptchaSolver": true,
+  // Automatically solve captcha true/false
+  "LoggingInterval": 10,
+  // Interval between updating log table in seconds
+  "": {
+    // Token between the double quotes
+    "HuntingChannel": 0,
+    // Hunting Channel ID, 0 to disable hunting
+    "FishingChannel": 0,
+    // Fishing Channel ID, 0 to disable fishing
+    "Balls": {
+      // Which ball for which rarity (hunting)
+      "Common": "pb",
+      "Uncommon": "pb",
+      "Rare": "gb",
+      "Super Rare": "ub",
+      "Legendary": "mb",
+      "Shiny": "mb",
+      "Shiny Event": "mb",
+      "Shiny Full-odds": "prb"
+    },
+    "FishBalls": {
+      // Which ball for which rarity (fishing)
+      "Common": "pb",
+      "Uncommon": "gb",
+      "Rare": "ub",
+      "Super Rare": "ub",
+      "Legendary": "db",
+      "Shiny": "mb",
+      "Golden": "mb"
+    },
+    "AutoBuy": {
+      // How many balls to buy when none left, set 0 to disable
+      "pb": 50,
+      "gb": 25,
+      "ub": 5,
+      "mb": 1
+    },
+    "RetryCooldown": 1,
+    // Time to wait in seconds after "Please wait" messages
+    "HuntingCooldown": 8.4,
+    // Time between /pokemon commands
+    "FishingCooldown": 22.4,
+    // Time between /fish spawn commands
+    "CaptchaRetries": 3
+    // How may times to retry after one incorrect captcha
+  },
+  // Add multiple accounts below :-
+  "": {
+    "HuntingChannel": 0,
+    "FishingChannel": 0,
+    "Balls": {
+      "Common": "pb",
+      "Uncommon": "pb",
+      "Rare": "gb",
+      "Super Rare": "ub",
+      "Legendary": "mb",
+      "Shiny": "mb",
+      "Shiny Event": "mb",
+      "Shiny Full-odds": "prb"
+    },
+    "FishBalls": {
+      "Common": "pb",
+      "Uncommon": "gb",
+      "Rare": "ub",
+      "Super Rare": "ub",
+      "Legendary": "db",
+      "Shiny": "mb",
+      "Golden": "mb"
+    },
+    "AutoBuy": {
+      "pb": 50,
+      "gb": 25,
+      "ub": 5,
+      "mb": 1
+    },
+    "RetryCooldown": 1,
+    "HuntingCooldown": 8.4,
+    "FishingCooldown": 22.4,
+    "CaptchaRetries": 3
+  }
+}
