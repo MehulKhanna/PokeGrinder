@@ -3,6 +3,7 @@
 A robust and efficient discord self-bot for automating Pokémeow with a free captcha solver.
 
 ![image](/assets/image.png)
+The logs may look different for you depending on your terminal config ;).
 
 ## Supported Features
 
