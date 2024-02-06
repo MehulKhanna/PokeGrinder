@@ -48,7 +48,7 @@ The logs may look different for you depending on your terminal config ;).
 
 ## Config
 
-```
+```jsonc
 {
   "CaptchaSolver": true,
   // Automatically solve captcha true/false
