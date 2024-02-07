@@ -74,7 +74,7 @@ async def start_bots(token: str) -> None:
 
 async def start() -> None:
     await asyncio.gather(
-        *[start_bots(token) for token in list(config.keys())[3:]], logger()
+        *[start_bots(token) for token in list(config.keys())[2:]], logger()
     )
 
 

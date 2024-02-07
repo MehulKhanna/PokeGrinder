@@ -18,10 +18,7 @@ class Config:
     captcha_solver: bool
 
 
-async def get_commands(bot: commands.Bot, channel_id: int) -> (
-    TextChannel,
-    dict[str, SlashCommand | UserCommand | MessageCommand | SubCommand] | None,
-):
+async def get_commands(bot: commands.Bot, channel_id: int):
     if channel_id == 0:
         return None, None
 
