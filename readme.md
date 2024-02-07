@@ -45,7 +45,8 @@ The logs may look different for you depending on your terminal config ;).
 ## Upcoming Features
 
 1. Quests
-2. Eggs
+2. Auto Release Duplicates
+3. Holding and Hatching Eggs
 
 ## Config
 
