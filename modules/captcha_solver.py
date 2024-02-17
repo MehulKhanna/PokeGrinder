@@ -1,15 +1,23 @@
-from os import remove
+import requests
+from PIL import Image
+from io import BytesIO
 from ultralytics import YOLO
 
-model = YOLO("assets/Solver1850.pt")
+model = YOLO("assets/Solver100k.pt")
 
 
 def solve_captcha(url: str) -> str:
-    result = model.predict(
-        url, imgsz=320, save=False, agnostic_nms=True, max_det=6, verbose=False
-    )[0]
+    resp = requests.get(url)
+    if resp.status_code != 200:
+        print("Encountered an error while downloading captcha image!!")
+        exit()
 
-    remove(url.split("/")[-1])
+    image_buffer = BytesIO(resp.content)
+    image = Image.open(image_buffer)
+
+    result = model.predict(
+        image, imgsz=320, save=False, agnostic_nms=True, max_det=6, verbose=False
+    )[0]
 
     classes, boxes = list(map(int, result.boxes.cls)), list(result.boxes.xyxy)
     detections = [(name, float(boxes[index][0])) for index, name in enumerate(classes)]

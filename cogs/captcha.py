@@ -1,5 +1,5 @@
 import asyncio
-
+from random import randint
 from discord import Message
 from discord.ext import commands
 
@@ -27,9 +27,9 @@ class Captcha(commands.Cog):
         if "captcha" not in message.embeds[0].description:
             return
 
-        await asyncio.sleep(1)
+        await asyncio.sleep(1 + randint(0, self.config.suspicion_avoidance) / 1000)
         await message.channel.send(
-            solve_captcha(message.embeds[0].image.url.split("?")[0])
+            solve_captcha(message.embeds[0].image.url)
         )
 
     @commands.Cog.listener()
@@ -45,6 +45,7 @@ class Captcha(commands.Cog):
             return
 
         if "Thank you" in after.content:
+            await asyncio.sleep(randint(0, self.config.suspicion_avoidance) / 1000)
             if after.channel.id == self.config.hunting_channel_id:
                 await self.bot.hunting_channel_commands[after.interaction.name]()
 
@@ -64,4 +65,5 @@ class Captcha(commands.Cog):
         ):
             return
 
-        await after.channel.send(solve_captcha(after.embeds[0].image.url.split("?")[0]))
+        await asyncio.sleep(1 + randint(0, self.config.suspicion_avoidance) / 1000)
+        await after.channel.send(solve_captcha(after.embeds[0].image.url))

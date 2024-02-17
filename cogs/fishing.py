@@ -1,6 +1,7 @@
 import json
 import asyncio
 from time import time
+from random import randint
 
 from discord import Message, InvalidData
 from discord.ext import commands
@@ -32,6 +33,7 @@ class Fishing(commands.Cog):
             return
 
         await asyncio.sleep(self.config.retry_cooldown)
+        await asyncio.sleep(randint(0, self.config.suspicion_avoidance) / 1000)
         await self.bot.fishing_channel_commands["fish spawn"]()
 
     @commands.Cog.listener()
@@ -52,6 +54,7 @@ class Fishing(commands.Cog):
         ):
             self.bot.last_fish = time()
             await asyncio.sleep(self.config.fishing_cooldown)
+            await asyncio.sleep(randint(0, self.config.suspicion_avoidance) / 1000)
             await self.bot.fishing_channel_commands["fish spawn"]()
             return
 
@@ -95,6 +98,7 @@ class Fishing(commands.Cog):
             if not buttons:
                 return
 
+            await asyncio.sleep(randint(0, self.config.suspicion_avoidance) / 1000)
             await buttons[-1].click()
             return
 
@@ -102,11 +106,19 @@ class Fishing(commands.Cog):
             if "caught" in after.embeds[0].description:
                 self.bot.fish_catches += 1
 
-            task = asyncio.create_task(
-                auto_buy(self.config, self.bot.fishing_channel_commands, after)
-            )
+            tasks = []
+
+            if "Your next Quest is now ready!" in before.content:
+                tasks.append(asyncio.create_task(
+                    self.bot.fishing_channel_commands["quest info"]()
+                ))
+
+            tasks.append(asyncio.create_task(
+                auto_buy(self.bot, self.config, self.bot.fishing_channel_commands, after)
+            ))
 
             await asyncio.sleep(self.config.fishing_cooldown)
+            await asyncio.sleep(randint(0, self.config.suspicion_avoidance) / 1000)
             await self.bot.fishing_channel_commands["fish spawn"]()
-            await task
+            [await task for task in tasks]
             return

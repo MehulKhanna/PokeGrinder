@@ -15,13 +15,13 @@ from cogs.startup import Startup, Config
 
 start_time = datetime.now()
 discord.utils.setup_logging()
-config = json.load(open("config.jsonc"))
+config = json.load(open("config.json"))
 bots: List[Bot] = []
 
 
 async def logger():
     await asyncio.sleep(config["LoggingInterval"])
-    log(bots, start_time)
+    log(bots, start_time, config["ClearConsole"])
     await asyncio.create_task(logger())
 
 
@@ -45,6 +45,7 @@ async def start_bots(token: str) -> None:
         config[token]["FishingCooldown"],
         config[token]["CaptchaRetries"],
         config["CaptchaSolver"],
+        config["SuspicionAvoidance"],
     )
 
     (
@@ -55,7 +56,8 @@ async def start_bots(token: str) -> None:
         bot.coins_earned,
         bot.last_hunt,
         bot.last_fish,
-    ) = (0, 0, 0, 0, 0, time(), time())
+        bot.auto_buy_queued,
+    ) = (0, 0, 0, 0, 0, time(), time(), False)
 
     bots.append(bot)
     await bot.add_cog(Startup(bot))
@@ -74,7 +76,7 @@ async def start_bots(token: str) -> None:
 
 async def start() -> None:
     await asyncio.gather(
-        *[start_bots(token) for token in list(config.keys())[2:]], logger()
+        *[start_bots(token) for token in list(config.keys())[4:]], logger()
     )
 
 

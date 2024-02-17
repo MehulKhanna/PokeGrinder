@@ -8,7 +8,7 @@ from discord.ext.commands import Bot
 console = Console()
 
 
-def log(bots: List[Bot], start_time: datetime) -> None:
+def log(bots: List[Bot], start_time: datetime, clear_console: bool) -> None:
     elapsed_time = datetime.now() - start_time
     hours = elapsed_time.seconds // 3600
     minutes = (elapsed_time.seconds % 3600) // 60
@@ -61,7 +61,9 @@ def log(bots: List[Bot], start_time: datetime) -> None:
         style="bold red"
     )
 
-    os.system("cls" if os.name == "nt" else "clear")
+    if clear_console:
+        os.system("cls" if os.name == "nt" else "clear")
+
     console.print(r"""__________       __            ________      .__            .___            
 \______   \____ |  | __ ____  /  _____/______|__| ____    __| _/___________ 
  |     ___/  _ \|  |/ // __ \/   \  __\_  __ \  |/    \  / __ |/ __ \_  __ \

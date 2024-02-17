@@ -11,7 +11,7 @@ The logs may look different for you depending on your terminal config ;).
 1. Hunting
 
 - Encounters Pokémon and uses a ball depending on the rarity of the Pokémon.
-- Uses a ball of lower price if missing the specified ball in the config.
+- Use a ball of lower price if missing the specified ball in the config.
 
 2. Fishing
 
@@ -20,16 +20,14 @@ The logs may look different for you depending on your terminal config ;).
 
 3. Captcha Solver
 
-- Automatically solves captcha with about 93% accuracy.
+- Automatically solves captcha with 96% accuracy.
 - Retries for the specified number of times in the config.
-- About 0.0024% chance of getting banned with 3 retries.
-- About 0.00016% chance of getting banned with 4 retries.
-- You will probably get banned after solving 41,666 captchas!
+- Special thanks to @Faust for training a captcha solver with 100k+ images.
 
 4. Auto Buy Balls
 
 - Auto buys balls when none are left.
-- Amount of balls to buy can be specified in the config.
+- The Number of balls to buy can be specified in the config.
 - Works while both hunting and fishing.
 
 5. Multiple Accounts
@@ -42,20 +40,26 @@ The logs may look different for you depending on your terminal config ;).
 - Displays a table containing stats for all accounts with time elapsed.
 - Frequency of logging can be changed in the config.
 
+7. Quests
+- Automatically sends `/quest info` when a new quest is ready.
+
 ## Upcoming Features
 
-1. Quests
-2. Auto Release Duplicates
-3. Holding and Hatching Eggs
+1. Auto Releases Duplicates
+2. Holding and Hatching Eggs
 
 ## Config
 
 ```jsonc
 {
+  "ClearConsole": true
+  // Whether to clear console or not (set false to see errors)
   "CaptchaSolver": true,
   // Automatically solve captcha true/false
   "LoggingInterval": 10,
   // Interval between updating log table in seconds
+  "SuspicionAvoidance": 250,
+  // Random delay (b/w 0 and the value) for responses in milliseconds
   "": {
     // Token between the double quotes
     "HuntingChannel": 0,
@@ -113,14 +117,15 @@ The logs may look different for you depending on your terminal config ;).
 [How to Find Your Discord Token](https://youtu.be/YEgFvgg7ZPI?si=bHkK506fdRibR8QI)
 
 ## Requirements
-
+- [Install Git Here](https://git-scm.com/downloads)
 - Python 3.8 or higher is required.
+- `pip install git+https://github.com/dolfies/discord.py-self`
 - `python -m pip install -r requirements.txt`
 
 ## Launching
 
 1. Clone the repository.
-2. Download `Solver1850.pt` from releases and place it into the assets folder.
+2. Download `Solver100k.pt` from releases and place it into the assets folder.
 3. Run the `main.py` file from the terminal.
 
 ## Stopping
@@ -135,4 +140,4 @@ Press `CTRL+C` while in the terminal.
 
 
 - Sometimes it will not use a ball (extremely rare). This is an issue with discord not registering button clicks
-  sometimes. This can not be fixed until a workaround is found.
+  sometimes. This cannot be fixed until a workaround is found.

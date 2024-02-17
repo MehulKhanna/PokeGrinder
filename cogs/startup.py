@@ -1,5 +1,8 @@
+import asyncio
 from time import time
+from typing import Tuple
 from dataclasses import dataclass
+
 from discord.ext import commands, tasks
 from discord import SlashCommand, UserCommand, MessageCommand, SubCommand, TextChannel
 
@@ -16,9 +19,16 @@ class Config:
     fishing_cooldown: float
     captcha_retries: int
     captcha_solver: bool
+    suspicion_avoidance: int
 
 
-async def get_commands(bot: commands.Bot, channel_id: int):
+async def get_commands(bot: commands.Bot, channel_id: int) -> (
+    Tuple[
+        TextChannel,
+        dict[str, SlashCommand | UserCommand | MessageCommand | SubCommand],
+    ]
+    | Tuple[None, None]
+):
     if channel_id == 0:
         return None, None
 
