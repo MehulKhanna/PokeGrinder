@@ -1,5 +1,6 @@
 import asyncio
 from time import time
+from typing import Dict
 from random import randint
 
 from discord import (
@@ -26,7 +27,7 @@ auto_buy_sub_strings = {
 async def auto_buy(
         bot: commands.Bot,
         config: Config,
-        commands: dict[str, SlashCommand | UserCommand | MessageCommand | SubCommand],
+        commands: Dict[str, SlashCommand | UserCommand | MessageCommand | SubCommand],
         message: Message,
 ) -> None:
     to_buy = [

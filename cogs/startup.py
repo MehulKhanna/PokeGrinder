@@ -1,6 +1,5 @@
-import asyncio
 from time import time
-from typing import Tuple
+from typing import Tuple, Dict
 from dataclasses import dataclass
 
 from discord.ext import commands, tasks
@@ -11,9 +10,9 @@ from discord import SlashCommand, UserCommand, MessageCommand, SubCommand, TextC
 class Config:
     hunting_channel_id: int
     fishing_channel_id: int
-    balls: dict[str, str]
-    fish_balls: dict[str, str]
-    auto_buy: dict[str, int]
+    balls: Dict[str, str]
+    fish_balls: Dict[str, str]
+    auto_buy: Dict[str, int]
     retry_cooldown: float
     hunting_cooldown: float
     fishing_cooldown: float
@@ -25,7 +24,7 @@ class Config:
 async def get_commands(bot: commands.Bot, channel_id: int) -> (
     Tuple[
         TextChannel,
-        dict[str, SlashCommand | UserCommand | MessageCommand | SubCommand],
+        Dict[str, SlashCommand | UserCommand | MessageCommand | SubCommand],
     ]
     | Tuple[None, None]
 ):
@@ -33,7 +32,7 @@ async def get_commands(bot: commands.Bot, channel_id: int) -> (
         return None, None
 
     channel = bot.get_channel(channel_id)
-    commands: dict[str, SlashCommand | UserCommand | MessageCommand | SubCommand] = {
+    commands: Dict[str, SlashCommand | UserCommand | MessageCommand | SubCommand] = {
         command.name: command
         for command in await channel.application_commands()
         if command.application_id == 664508672713424926
