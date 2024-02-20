@@ -1,6 +1,10 @@
-# PokeGrinder V2
+# PokeGrinder V2 
 
 A robust and efficient discord self-bot for automating Pokémeow with a free captcha solver.
+
+<a target="_blank" href="https://colab.research.google.com/github/MehulKhanna/PokeGrinder/blob/master/assets/PokeGrinder.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+</a>
 
 ![image](/assets/image.png)
 
@@ -115,6 +119,10 @@ The logs may look different for you depending on your terminal config ;).
 ## Get Token?
 
 [How to Find Your Discord Token](https://youtu.be/YEgFvgg7ZPI?si=bHkK506fdRibR8QI)
+
+### Run on Google Colab (no install required)
+1. Click on the "Open in Colab" button at the top of this readme.
+2. Follow through the steps on colab.
 
 ## Requirements
 - [Install Git Here](https://git-scm.com/downloads)
