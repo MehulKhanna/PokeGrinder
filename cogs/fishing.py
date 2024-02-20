@@ -59,7 +59,7 @@ class Fishing(commands.Cog):
             return
 
         elif (
-            "cast out an" in after.embeds[0].description
+            "cast out a" in after.embeds[0].description
             and "click the" in after.embeds[0].description
         ):
             self.bot.last_fish = time()

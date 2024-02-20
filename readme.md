@@ -22,7 +22,7 @@ The logs may look different for you depending on your terminal config ;).
 
 - Automatically solves captcha with 96% accuracy.
 - Retries for the specified number of times in the config.
-- Special thanks to @Faust for training a captcha solver with 100k+ images.
+- Special thanks to @Faust404 for training a captcha solver with 100k+ images.
 
 4. Auto Buy Balls
 
