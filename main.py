@@ -40,10 +40,10 @@ async def start_bots(token: str) -> None:
         config[token]["Balls"],
         config[token]["FishBalls"],
         config[token]["AutoBuy"],
-        config[token]["RetryCooldown"],
-        config[token]["HuntingCooldown"],
-        config[token]["FishingCooldown"],
-        config[token]["CaptchaRetries"],
+        config["Cooldowns"]["RetryCooldown"],
+        config["Cooldowns"]["HuntingCooldown"],
+        config["Cooldowns"]["FishingCooldown"],
+        config["CaptchaRetries"],
         config["CaptchaSolver"],
         config["SuspicionAvoidance"],
     )
@@ -76,7 +76,7 @@ async def start_bots(token: str) -> None:
 
 async def start() -> None:
     await asyncio.gather(
-        *[start_bots(token) for token in list(config.keys())[4:]], logger()
+        *[start_bots(token) for token in list(config.keys())[6:]], logger()
     )
 
 

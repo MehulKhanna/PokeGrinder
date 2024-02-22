@@ -69,16 +69,16 @@ class Startup(commands.Cog):
             await self.bot.fishing_channel_commands["fish spawn"]()
             self.fishing_check.start()
 
-    @tasks.loop(seconds=30)
+    @tasks.loop(seconds=15)
     async def hunting_check(self) -> None:
-        if time() - self.bot.last_hunt < 30:
+        if time() - self.bot.last_hunt < 15:
             return
 
         await self.bot.hunting_channel_commands["pokemon"]()
 
-    @tasks.loop(seconds=60)
+    @tasks.loop(seconds=30)
     async def fishing_check(self) -> None:
-        if time() - self.bot.last_fish < 60:
+        if time() - self.bot.last_fish < 30:
             return
 
         await self.bot.fishing_channel_commands["fish spawn"]()

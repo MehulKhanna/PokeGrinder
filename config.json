@@ -1,8 +1,14 @@
 {
+  "CaptchaRetries": 3,
   "ClearConsole": true,
   "CaptchaSolver": true,
   "LoggingInterval": 10,
   "SuspicionAvoidance": 250,
+  "Cooldowns": {
+    "RetryCooldown": 1,
+    "HuntingCooldown": 8.4,
+    "FishingCooldown": 22.4
+  },
   "": {
     "HuntingChannel": 0,
     "FishingChannel": 0,
@@ -30,11 +36,7 @@
       "gb": 50,
       "ub": 5,
       "mb": 1
-    },
-    "RetryCooldown": 1,
-    "HuntingCooldown": 8.4,
-    "FishingCooldown": 22.4,
-    "CaptchaRetries": 3
+    }
   },
   "": {
     "HuntingChannel": 0,
@@ -63,10 +65,6 @@
       "gb": 25,
       "ub": 5,
       "mb": 1
-    },
-    "RetryCooldown": 1,
-    "HuntingCooldown": 8.4,
-    "FishingCooldown": 22.4,
-    "CaptchaRetries": 3
+    }
   }
 }

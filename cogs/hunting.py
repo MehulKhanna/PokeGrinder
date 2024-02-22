@@ -25,10 +25,10 @@ auto_buy_sub_strings = {
 
 
 async def auto_buy(
-        bot: commands.Bot,
-        config: Config,
-        commands: Dict[str, SlashCommand | UserCommand | MessageCommand | SubCommand],
-        message: Message,
+    bot: commands.Bot,
+    config: Config,
+    commands: Dict[str, SlashCommand | UserCommand | MessageCommand | SubCommand],
+    message: Message,
 ) -> None:
     to_buy = [
         auto_buy_sub_strings[string]
@@ -39,7 +39,9 @@ async def auto_buy(
     if to_buy and config.auto_buy[to_buy[0]] != 0 and not bot.auto_buy_queued:
         bot.auto_buy_queued = True
         await asyncio.sleep(2 + randint(0, config.suspicion_avoidance) / 1000)
-        task = asyncio.create_task(commands["shop buy"](item=to_buy[0], amount=config.auto_buy[to_buy[0]]))
+        task = asyncio.create_task(
+            commands["shop buy"](item=to_buy[0], amount=config.auto_buy[to_buy[0]])
+        )
         bot.auto_buy_queued = False
         await task
 
@@ -55,9 +57,9 @@ class Hunting(commands.Cog):
             return
 
         if (
-                message.interaction.name != "pokemon"
-                or message.interaction.user != self.bot.user
-                or message.channel.id != self.config.hunting_channel_id
+            message.interaction.name != "pokemon"
+            or message.interaction.user != self.bot.user
+            or message.channel.id != self.config.hunting_channel_id
         ):
             return
 
@@ -80,7 +82,7 @@ class Hunting(commands.Cog):
         ][-1]
 
         balls = ["mb", "prb", "ub", "gb", "pb"]
-        balls = balls[balls.index(ball):]
+        balls = balls[balls.index(ball) :]
 
         buttons = [
             button
@@ -105,10 +107,10 @@ class Hunting(commands.Cog):
             return
 
         if (
-                after.interaction.name != "pokemon"
-                or after.interaction.user != self.bot.user
-                or after.channel.id != self.config.hunting_channel_id
-                or "found a wild" not in before.content
+            after.interaction.name != "pokemon"
+            or after.interaction.user != self.bot.user
+            or after.channel.id != self.config.hunting_channel_id
+            or "found a wild" not in before.content
         ):
             return
 
@@ -124,11 +126,18 @@ class Hunting(commands.Cog):
         tasks = []
 
         if "Your next Quest is now ready!" in before.content:
-            tasks.append(asyncio.create_task(self.bot.hunting_channel_commands["quest info"]()))
+            await asyncio.sleep(1 + randint(0, self.config.suspicion_avoidance) / 1000)
+            tasks.append(
+                asyncio.create_task(self.bot.hunting_channel_commands["quest info"]())
+            )
 
-        tasks.append(asyncio.create_task(
-            auto_buy(self.bot, self.config, self.bot.hunting_channel_commands, after)
-        ))
+        tasks.append(
+            asyncio.create_task(
+                auto_buy(
+                    self.bot, self.config, self.bot.hunting_channel_commands, after
+                )
+            )
+        )
 
         await asyncio.sleep(self.config.hunting_cooldown)
         await asyncio.sleep(randint(0, self.config.suspicion_avoidance) / 1000)

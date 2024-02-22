@@ -56,7 +56,9 @@ The logs may look different for you depending on your terminal config ;).
 
 ```jsonc
 {
-  "ClearConsole": true
+  "CaptchaRetries": 3,
+  // How may times to retry after one incorrect captcha
+  "ClearConsole": true,
   // Whether to clear console or not (set false to see errors)
   "CaptchaSolver": true,
   // Automatically solve captcha true/false
@@ -64,6 +66,14 @@ The logs may look different for you depending on your terminal config ;).
   // Interval between updating log table in seconds
   "SuspicionAvoidance": 250,
   // Random delay (b/w 0 and the value) for responses in milliseconds
+  "Cooldowns": {
+    "RetryCooldown": 1,
+    // Time to wait in seconds after "Please wait" messages
+    "HuntingCooldown": 8.4,
+    // Time between /pokemon commands
+    "FishingCooldown": 22.4
+    // Time between /fish spawn commands
+  },
   "": {
     // Token between the double quotes
     "HuntingChannel": 0,
@@ -97,15 +107,7 @@ The logs may look different for you depending on your terminal config ;).
       "gb": 25,
       "ub": 5,
       "mb": 1
-    },
-    "RetryCooldown": 1,
-    // Time to wait in seconds after "Please wait" messages
-    "HuntingCooldown": 8.4,
-    // Time between /pokemon commands
-    "FishingCooldown": 22.4,
-    // Time between /fish spawn commands
-    "CaptchaRetries": 3
-    // How may times to retry after one incorrect captcha
+    }
   },
   // Add multiple accounts below :-
   "Second Token": {...}
@@ -133,8 +135,7 @@ The logs may look different for you depending on your terminal config ;).
 ## Launching
 
 1. Clone the repository.
-2. Download `Solver100k.pt` from releases and place it into the assets folder.
-3. Run the `main.py` file from the terminal.
+2. Run the `main.py` file from the terminal.
 
 ## Stopping
 

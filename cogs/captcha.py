@@ -27,10 +27,12 @@ class Captcha(commands.Cog):
         if "captcha" not in message.embeds[0].description:
             return
 
-        await asyncio.sleep(1 + randint(0, self.config.suspicion_avoidance) / 1000)
-        await message.channel.send(
-            solve_captcha(message.embeds[0].image.url)
+        await asyncio.sleep(
+            self.config.retry_cooldown
+            + randint(0, self.config.suspicion_avoidance) / 1000
         )
+
+        await message.channel.send(solve_captcha(message.embeds[0].image.url))
 
     @commands.Cog.listener()
     async def on_message_edit(self, _, after: Message) -> None:
@@ -45,7 +47,11 @@ class Captcha(commands.Cog):
             return
 
         if "Thank you" in after.content:
-            await asyncio.sleep(randint(0, self.config.suspicion_avoidance) / 1000)
+            await asyncio.sleep(
+                self.config.retry_cooldown
+                + randint(0, self.config.suspicion_avoidance) / 1000
+            )
+
             if after.channel.id == self.config.hunting_channel_id:
                 await self.bot.hunting_channel_commands[after.interaction.name]()
 
@@ -65,5 +71,9 @@ class Captcha(commands.Cog):
         ):
             return
 
-        await asyncio.sleep(1 + randint(0, self.config.suspicion_avoidance) / 1000)
+        await asyncio.sleep(
+            self.config.retry_cooldown
+            + randint(0, self.config.suspicion_avoidance) / 1000
+        )
+
         await after.channel.send(solve_captcha(after.embeds[0].image.url))

@@ -109,13 +109,23 @@ class Fishing(commands.Cog):
             tasks = []
 
             if "Your next Quest is now ready!" in before.content:
-                tasks.append(asyncio.create_task(
-                    self.bot.fishing_channel_commands["quest info"]()
-                ))
+                await asyncio.sleep(
+                    1 + randint(0, self.config.suspicion_avoidance) / 1000
+                )
 
-            tasks.append(asyncio.create_task(
-                auto_buy(self.bot, self.config, self.bot.fishing_channel_commands, after)
-            ))
+                tasks.append(
+                    asyncio.create_task(
+                        self.bot.fishing_channel_commands["quest info"]()
+                    )
+                )
+
+            tasks.append(
+                asyncio.create_task(
+                    auto_buy(
+                        self.bot, self.config, self.bot.fishing_channel_commands, after
+                    )
+                )
+            )
 
             await asyncio.sleep(self.config.fishing_cooldown)
             await asyncio.sleep(randint(0, self.config.suspicion_avoidance) / 1000)
