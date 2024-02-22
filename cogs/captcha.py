@@ -27,7 +27,7 @@ class Captcha(commands.Cog):
         if "captcha" not in message.embeds[0].description:
             return
 
-        await asyncio.sleep(1 + randint(0, self.config.suspicion_avoidance) / 1000)
+        await asyncio.sleep(3 + randint(0, self.config.suspicion_avoidance) / 1000)
         await message.channel.send(
             solve_captcha(message.embeds[0].image.url)
         )
@@ -65,5 +65,5 @@ class Captcha(commands.Cog):
         ):
             return
 
-        await asyncio.sleep(1 + randint(0, self.config.suspicion_avoidance) / 1000)
+        await asyncio.sleep(3 + randint(0, self.config.suspicion_avoidance) / 1000)
         await after.channel.send(solve_captcha(after.embeds[0].image.url))

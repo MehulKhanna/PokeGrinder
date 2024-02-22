@@ -114,12 +114,18 @@ class Hunting(commands.Cog):
 
         if "caught" in after.embeds[0].description:
             self.bot.catches += 1
+            self.bot.release += 1
             self.bot.coins_earned += int(
                 after.embeds[0]
                 .footer.text.split("You earned ")[1]
                 .split(" ")[0]
                 .replace(",", "")
             )
+            if self.config.autordcap != 0:
+                if self.bot.release >= self.config.autordcap:
+                    self.bot.release = 0
+                    await asyncio.sleep(2)
+                    await self.bot.hunting_channel_commands["release duplicates"]()
 
         tasks = []
 

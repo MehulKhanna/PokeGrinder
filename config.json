@@ -11,29 +11,30 @@
       "Uncommon": "pb",
       "Rare": "gb",
       "Super Rare": "ub",
-      "Legendary": "mb",
-      "Shiny": "mb",
-      "Shiny Event": "mb",
-      "Shiny Full-odds": "prb"
+      "Legendary": "ub",
+      "Shiny": "ub",
+      "Shiny Event": "ub",
+      "Shiny Full-odds": "ub"
     },
     "FishBalls": {
       "Common": "pb",
-      "Uncommon": "gb",
-      "Rare": "ub",
+      "Uncommon": "pb",
+      "Rare": "gb",
       "Super Rare": "ub",
-      "Legendary": "db",
-      "Shiny": "mb",
-      "Golden": "mb"
+      "Legendary": "ub",
+      "Shiny": "ub",
+      "Golden": "ub"
     },
     "AutoBuy": {
-      "pb": 100,
-      "gb": 50,
-      "ub": 5,
-      "mb": 1
-    },
-    "RetryCooldown": 1,
-    "HuntingCooldown": 8.4,
-    "FishingCooldown": 22.4,
+      "pb": 10,
+      "gb": 5,
+      "ub": 1,
+      "mb": 0
+      },
+    "AutoRDCap": 46,   
+    "RetryCooldown": 3,
+    "HuntingCooldown": 8.7,
+    "FishingCooldown": 25,
     "CaptchaRetries": 3
   },
   "": {
@@ -44,29 +45,30 @@
       "Uncommon": "pb",
       "Rare": "gb",
       "Super Rare": "ub",
-      "Legendary": "mb",
-      "Shiny": "mb",
-      "Shiny Event": "mb",
-      "Shiny Full-odds": "prb"
+      "Legendary": "ub",
+      "Shiny": "ub",
+      "Shiny Event": "ub",
+      "Shiny Full-odds": "ub"
     },
     "FishBalls": {
       "Common": "pb",
-      "Uncommon": "gb",
-      "Rare": "ub",
+      "Uncommon": "pb",
+      "Rare": "gb",
       "Super Rare": "ub",
-      "Legendary": "db",
-      "Shiny": "mb",
-      "Golden": "mb"
+      "Legendary": "ub",
+      "Shiny": "ub",
+      "Golden": "ub"
     },
     "AutoBuy": {
-      "pb": 50,
-      "gb": 25,
-      "ub": 5,
-      "mb": 1
+      "pb": 10,
+      "gb": 5,
+      "ub": 1,
+      "mb": 0
     },
-    "RetryCooldown": 1,
-    "HuntingCooldown": 8.4,
-    "FishingCooldown": 22.4,
+    "AutoRDCap": 69,
+    "RetryCooldown": 3,
+    "HuntingCooldown": 8.7,
+    "FishingCooldown": 25,
     "CaptchaRetries": 3
   }
 }

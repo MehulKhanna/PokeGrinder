@@ -3,7 +3,7 @@ import asyncio
 from time import time
 from typing import List
 from datetime import datetime
-
+import random
 import discord
 from discord.ext.commands import Bot
 
@@ -40,6 +40,7 @@ async def start_bots(token: str) -> None:
         config[token]["Balls"],
         config[token]["FishBalls"],
         config[token]["AutoBuy"],
+        config[token]["AutoRDCap"],
         config[token]["RetryCooldown"],
         config[token]["HuntingCooldown"],
         config[token]["FishingCooldown"],
@@ -49,6 +50,7 @@ async def start_bots(token: str) -> None:
     )
 
     (
+        bot.release,
         bot.encounters,
         bot.catches,
         bot.fish_encounters,
@@ -57,7 +59,7 @@ async def start_bots(token: str) -> None:
         bot.last_hunt,
         bot.last_fish,
         bot.auto_buy_queued,
-    ) = (0, 0, 0, 0, 0, time(), time(), False)
+    ) = (0, 0, 0, 0, 0, 0, time(), time(), False)
 
     bots.append(bot)
     await bot.add_cog(Startup(bot))

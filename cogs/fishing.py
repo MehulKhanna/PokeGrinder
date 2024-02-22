@@ -9,7 +9,7 @@ from discord.ext import commands
 from cogs.hunting import auto_buy
 from cogs.startup import Config
 
-fishes = json.load(open("fishes.json"))
+fishes = json.load(open("assets/fishes.json"))
 
 
 class Fishing(commands.Cog):
@@ -105,6 +105,7 @@ class Fishing(commands.Cog):
         elif "fished out a wild" in before.embeds[0].description:
             if "caught" in after.embeds[0].description:
                 self.bot.fish_catches += 1
+                self.bot.release += 1
 
             tasks = []
 

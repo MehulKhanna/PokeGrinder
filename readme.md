@@ -127,7 +127,6 @@ The logs may look different for you depending on your terminal config ;).
 ## Requirements
 - [Install Git Here](https://git-scm.com/downloads)
 - Python 3.8 or higher is required.
-- `pip install git+https://github.com/dolfies/discord.py-self`
 - `python -m pip install -r requirements.txt`
 
 ## Launching
