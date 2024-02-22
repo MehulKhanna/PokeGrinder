@@ -9,7 +9,7 @@ from discord.ext import commands
 from cogs.hunting import auto_buy
 from cogs.startup import Config
 
-fishes = json.load(open("assets/fishes.json"))
+fishes = json.load(open("fishes.json"))
 
 
 class Fishing(commands.Cog):
@@ -103,20 +103,45 @@ class Fishing(commands.Cog):
             return
 
         elif "fished out a wild" in before.embeds[0].description:
-            if "caught" in after.embeds[0].description:
-                self.bot.fish_catches += 1
-                self.bot.release += 1
-
             tasks = []
 
-            if "Your next Quest is now ready!" in before.content:
-                tasks.append(asyncio.create_task(
-                    self.bot.fishing_channel_commands["quest info"]()
-                ))
+            if "caught" in after.embeds[0].description:
+                self.bot.fish_catches += 1
+                self.bot.duplicates += 1
 
-            tasks.append(asyncio.create_task(
-                auto_buy(self.bot, self.config, self.bot.fishing_channel_commands, after)
-            ))
+                if (
+                    self.config.auto_release_duplicates != 0
+                    and self.bot.duplicates >= self.config.auto_release_duplicates
+                ):
+                    self.bot.duplicates = 0
+                    await asyncio.sleep(
+                        2 + randint(0, self.config.suspicion_avoidance) / 1000
+                    )
+
+                    tasks.append(
+                        asyncio.create_task(
+                            self.bot.hunting_channel_commands["release duplicates"]()
+                        )
+                    )
+
+            if "Your next Quest is now ready!" in before.content:
+                await asyncio.sleep(
+                    1 + randint(0, self.config.suspicion_avoidance) / 1000
+                )
+
+                tasks.append(
+                    asyncio.create_task(
+                        self.bot.fishing_channel_commands["quest info"]()
+                    )
+                )
+
+            tasks.append(
+                asyncio.create_task(
+                    auto_buy(
+                        self.bot, self.config, self.bot.fishing_channel_commands, after
+                    )
+                )
+            )
 
             await asyncio.sleep(self.config.fishing_cooldown)
             await asyncio.sleep(randint(0, self.config.suspicion_avoidance) / 1000)

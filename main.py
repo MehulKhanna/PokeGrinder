@@ -3,7 +3,7 @@ import asyncio
 from time import time
 from typing import List
 from datetime import datetime
-import random
+
 import discord
 from discord.ext.commands import Bot
 
@@ -40,22 +40,22 @@ async def start_bots(token: str) -> None:
         config[token]["Balls"],
         config[token]["FishBalls"],
         config[token]["AutoBuy"],
-        config[token]["AutoRDCap"],
-        config[token]["RetryCooldown"],
-        config[token]["HuntingCooldown"],
-        config[token]["FishingCooldown"],
-        config[token]["CaptchaRetries"],
+        config[token]["AutoReleaseDuplicates"],
+        config["Cooldowns"]["RetryCooldown"],
+        config["Cooldowns"]["HuntingCooldown"],
+        config["Cooldowns"]["FishingCooldown"],
+        config["CaptchaRetries"],
         config["CaptchaSolver"],
         config["SuspicionAvoidance"],
     )
 
     (
-        bot.release,
         bot.encounters,
         bot.catches,
         bot.fish_encounters,
         bot.fish_catches,
         bot.coins_earned,
+        bot.duplicates,
         bot.last_hunt,
         bot.last_fish,
         bot.auto_buy_queued,
@@ -78,7 +78,7 @@ async def start_bots(token: str) -> None:
 
 async def start() -> None:
     await asyncio.gather(
-        *[start_bots(token) for token in list(config.keys())[4:]], logger()
+        *[start_bots(token) for token in list(config.keys())[6:]], logger()
     )
 
 
