@@ -47,10 +47,13 @@ The logs may look different for you depending on your terminal config ;).
 7. Quests
 - Automatically sends `/quest info` when a new quest is ready.
 
+8. Auto Release Duplicates
+- Automatically sends `/release duplicates` after the bot has caught the specified number of duplicates in the config.
+- Counts the number of duplicates caught based on "has been added to your Pokedex" messages.
+
 ## Upcoming Features
 
-1. Auto Releases Duplicates
-2. Holding and Hatching Eggs
+1. Holding and Hatching Eggs
 
 ## Config
 
