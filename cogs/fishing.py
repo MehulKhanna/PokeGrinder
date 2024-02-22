@@ -103,10 +103,26 @@ class Fishing(commands.Cog):
             return
 
         elif "fished out a wild" in before.embeds[0].description:
+            tasks = []
+
             if "caught" in after.embeds[0].description:
                 self.bot.fish_catches += 1
+                self.bot.duplicates += 1
 
-            tasks = []
+                if (
+                    self.config.auto_release_duplicates != 0
+                    and self.bot.duplicates >= self.config.auto_release_duplicates
+                ):
+                    self.bot.duplicates = 0
+                    await asyncio.sleep(
+                        2 + randint(0, self.config.suspicion_avoidance) / 1000
+                    )
+
+                    tasks.append(
+                        asyncio.create_task(
+                            self.bot.hunting_channel_commands["release duplicates"]()
+                        )
+                    )
 
             if "Your next Quest is now ready!" in before.content:
                 await asyncio.sleep(

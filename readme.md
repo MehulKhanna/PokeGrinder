@@ -107,7 +107,9 @@ The logs may look different for you depending on your terminal config ;).
       "gb": 25,
       "ub": 5,
       "mb": 1
-    }
+    },
+    "AutoReleaseDuplicates": 100
+    // Number of duplicates before auto releasing duplicates, set 0 to disable
   },
   // Add multiple accounts below :-
   "Second Token": {...}

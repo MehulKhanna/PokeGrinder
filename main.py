@@ -40,6 +40,7 @@ async def start_bots(token: str) -> None:
         config[token]["Balls"],
         config[token]["FishBalls"],
         config[token]["AutoBuy"],
+        config[token]["AutoReleaseDuplicates"],
         config["Cooldowns"]["RetryCooldown"],
         config["Cooldowns"]["HuntingCooldown"],
         config["Cooldowns"]["FishingCooldown"],
@@ -54,10 +55,11 @@ async def start_bots(token: str) -> None:
         bot.fish_encounters,
         bot.fish_catches,
         bot.coins_earned,
+        bot.duplicates,
         bot.last_hunt,
         bot.last_fish,
         bot.auto_buy_queued,
-    ) = (0, 0, 0, 0, 0, time(), time(), False)
+    ) = (0, 0, 0, 0, 0, 0, time(), time(), False)
 
     bots.append(bot)
     await bot.add_cog(Startup(bot))

@@ -114,6 +114,8 @@ class Hunting(commands.Cog):
         ):
             return
 
+        tasks = []
+
         if "caught" in after.embeds[0].description:
             self.bot.catches += 1
             self.bot.coins_earned += int(
@@ -123,7 +125,23 @@ class Hunting(commands.Cog):
                 .replace(",", "")
             )
 
-        tasks = []
+            if "has been added to your Pokedex" not in after.embeds[0].description:
+                self.bot.duplicates += 1
+
+            if (
+                self.config.auto_release_duplicates != 0
+                and self.bot.duplicates >= self.config.auto_release_duplicates
+            ):
+                self.bot.duplicates = 0
+                await asyncio.sleep(
+                    2 + randint(0, self.config.suspicion_avoidance) / 1000
+                )
+
+                tasks.append(
+                    asyncio.create_task(
+                        self.bot.hunting_channel_commands["release duplicates"]()
+                    )
+                )
 
         if "Your next Quest is now ready!" in before.content:
             await asyncio.sleep(1 + randint(0, self.config.suspicion_avoidance) / 1000)

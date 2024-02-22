@@ -13,6 +13,7 @@ class Config:
     balls: Dict[str, str]
     fish_balls: Dict[str, str]
     auto_buy: Dict[str, int]
+    auto_release_duplicates: int
     retry_cooldown: float
     hunting_cooldown: float
     fishing_cooldown: float

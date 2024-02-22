@@ -36,7 +36,8 @@
       "gb": 50,
       "ub": 5,
       "mb": 1
-    }
+    },
+    "AutoReleaseDuplicates": 100
   },
   "": {
     "HuntingChannel": 0,
@@ -65,6 +66,7 @@
       "gb": 25,
       "ub": 5,
       "mb": 1
-    }
+    },
+    "AutoReleaseDuplicates": 100
   }
 }
