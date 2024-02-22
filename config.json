@@ -1,41 +1,13 @@
 {
+  "CaptchaRetries": 3,
   "ClearConsole": true,
   "CaptchaSolver": true,
   "LoggingInterval": 10,
   "SuspicionAvoidance": 250,
-  "": {
-    "HuntingChannel": 0,
-    "FishingChannel": 0,
-    "Balls": {
-      "Common": "pb",
-      "Uncommon": "pb",
-      "Rare": "gb",
-      "Super Rare": "ub",
-      "Legendary": "ub",
-      "Shiny": "ub",
-      "Shiny Event": "ub",
-      "Shiny Full-odds": "ub"
-    },
-    "FishBalls": {
-      "Common": "pb",
-      "Uncommon": "pb",
-      "Rare": "gb",
-      "Super Rare": "ub",
-      "Legendary": "ub",
-      "Shiny": "ub",
-      "Golden": "ub"
-    },
-    "AutoBuy": {
-      "pb": 10,
-      "gb": 5,
-      "ub": 1,
-      "mb": 0
-      },
-    "AutoRDCap": 46,   
-    "RetryCooldown": 3,
-    "HuntingCooldown": 8.7,
-    "FishingCooldown": 25,
-    "CaptchaRetries": 3
+  "Cooldowns": {
+    "RetryCooldown": 1,
+    "HuntingCooldown": 8.4,
+    "FishingCooldown": 22.4
   },
   "": {
     "HuntingChannel": 0,
@@ -45,30 +17,56 @@
       "Uncommon": "pb",
       "Rare": "gb",
       "Super Rare": "ub",
-      "Legendary": "ub",
-      "Shiny": "ub",
-      "Shiny Event": "ub",
-      "Shiny Full-odds": "ub"
+      "Legendary": "mb",
+      "Shiny": "mb",
+      "Shiny Event": "mb",
+      "Shiny Full-odds": "prb"
     },
     "FishBalls": {
+      "Common": "pb",
+      "Uncommon": "gb",
+      "Rare": "ub",
+      "Super Rare": "ub",
+      "Legendary": "db",
+      "Shiny": "mb",
+      "Golden": "mb"
+    },
+    "AutoBuy": {
+      "pb": 100,
+      "gb": 50,
+      "ub": 5,
+      "mb": 1
+    },
+    "AutoReleaseDuplicates": 100
+  },
+  "": {
+    "HuntingChannel": 0,
+    "FishingChannel": 0,
+    "Balls": {
       "Common": "pb",
       "Uncommon": "pb",
       "Rare": "gb",
       "Super Rare": "ub",
-      "Legendary": "ub",
-      "Shiny": "ub",
-      "Golden": "ub"
+      "Legendary": "mb",
+      "Shiny": "mb",
+      "Shiny Event": "mb",
+      "Shiny Full-odds": "prb"
+    },
+    "FishBalls": {
+      "Common": "pb",
+      "Uncommon": "gb",
+      "Rare": "ub",
+      "Super Rare": "ub",
+      "Legendary": "db",
+      "Shiny": "mb",
+      "Golden": "mb"
     },
     "AutoBuy": {
-      "pb": 10,
-      "gb": 5,
-      "ub": 1,
-      "mb": 0
+      "pb": 50,
+      "gb": 25,
+      "ub": 5,
+      "mb": 1
     },
-    "AutoRDCap": 69,
-    "RetryCooldown": 3,
-    "HuntingCooldown": 8.7,
-    "FishingCooldown": 25,
-    "CaptchaRetries": 3
+    "AutoReleaseDuplicates": 100
   }
 }
