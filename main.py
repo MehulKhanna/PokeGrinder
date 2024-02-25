@@ -59,7 +59,8 @@ async def start_bots(token: str) -> None:
         bot.last_hunt,
         bot.last_fish,
         bot.auto_buy_queued,
-    ) = (0, 0, 0, 0, 0, 0, time(), time(), False)
+        bot.limit,
+    ) = (0, 0, 0, 0, 0, 0, time(), time(), False, False)
 
     bots.append(bot)
     await bot.add_cog(Startup(bot))

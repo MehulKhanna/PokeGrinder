@@ -72,6 +72,10 @@ class Startup(commands.Cog):
 
     @tasks.loop(seconds=20)
     async def hunting_check(self) -> None:
+        if self.bot.limit:
+            self.hunting_check.stop()
+            return
+
         if time() - self.bot.last_hunt < 20:
             return
 

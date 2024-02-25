@@ -69,6 +69,13 @@ class Hunting(commands.Cog):
             await self.bot.hunting_channel_commands["pokemon"]()
             return
 
+        if not message.embeds:
+            return
+
+        if "You have reached your daily catch limit!" in message.embeds[0].description:
+            self.bot.limit = True
+            return
+
         if "found a wild" not in message.content:
             return
 
