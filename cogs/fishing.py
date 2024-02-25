@@ -120,7 +120,7 @@ class Fishing(commands.Cog):
 
                     tasks.append(
                         asyncio.create_task(
-                            self.bot.hunting_channel_commands["release duplicates"]()
+                            self.bot.fishing_channel_commands["release duplicates"]()
                         )
                     )
 
