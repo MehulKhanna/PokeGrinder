@@ -91,11 +91,12 @@ class Hunting(commands.Cog):
         balls = ["mb", "prb", "ub", "gb", "pb"]
         balls = balls[balls.index(ball) :]
 
+        children = [
+            child for component in message.components for child in component.children
+        ]
+
         buttons = [
-            button
-            for button in message.components[0].children
-            for ball in balls
-            if button.custom_id == ball
+            button for button in children for ball in balls if button.custom_id == ball
         ]
 
         if not buttons:

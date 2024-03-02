@@ -88,9 +88,13 @@ class Fishing(commands.Cog):
             balls = ["mb", "db", "prb", "ub", "gb", "pb"]
             balls = balls[balls.index(ball) :]
 
+            children = [
+                child for component in after.components for child in component.children
+            ]
+
             buttons = [
                 button
-                for button in after.components[0].children
+                for button in children
                 for ball in balls
                 if button.custom_id == ball + "_fish"
             ]
