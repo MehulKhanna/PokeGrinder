@@ -84,7 +84,8 @@ The logs may look different for you depending on your terminal config ;).
     "FishingChannel": 0,
     // Fishing Channel ID, 0 to disable fishing
     "ExceptionBalls": {
-      "Crystal Onix": "mb"
+      "Crystal Onix": "mb",
+      "Another pokemon name": "ball"
     },
     // Set which balls to send on specific pokemons
     "Balls": {
