@@ -82,11 +82,16 @@ class Hunting(commands.Cog):
         self.bot.encounters += 1
         self.bot.last_hunt = time()
 
-        ball = [
-            self.config.balls[rarity]
-            for rarity in list(self.config.balls.keys())
-            if rarity in message.embeds[0].footer.text
-        ][-1]
+        name = message.embeds[0].description.split("**")[3]
+        if name in self.config.exception_balls:
+            ball = self.config.exception_balls[name]
+
+        else:
+            ball = [
+                self.config.balls[rarity]
+                for rarity in list(self.config.balls.keys())
+                if rarity in message.embeds[0].footer.text
+            ][-1]
 
         balls = ["mb", "prb", "ub", "gb", "pb"]
         balls = balls[balls.index(ball) :]

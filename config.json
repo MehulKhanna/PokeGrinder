@@ -12,6 +12,9 @@
   "": {
     "HuntingChannel": 0,
     "FishingChannel": 0,
+    "ExceptionBalls": {
+      "Crystal Onix": "mb"
+    },
     "Balls": {
       "Common": "pb",
       "Uncommon": "pb",
@@ -42,6 +45,9 @@
   "": {
     "HuntingChannel": 0,
     "FishingChannel": 0,
+    "ExceptionBalls": {
+      "Crystal Onix": "mb"
+    },
     "Balls": {
       "Common": "pb",
       "Uncommon": "pb",

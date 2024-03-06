@@ -37,6 +37,7 @@ async def start_bots(token: str) -> None:
     bot.config = Config(
         config[token]["HuntingChannel"],
         config[token]["FishingChannel"],
+        config[token]["ExceptionBalls"],
         config[token]["Balls"],
         config[token]["FishBalls"],
         config[token]["AutoBuy"],

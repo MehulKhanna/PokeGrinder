@@ -83,6 +83,10 @@ The logs may look different for you depending on your terminal config ;).
     // Hunting Channel ID, 0 to disable hunting
     "FishingChannel": 0,
     // Fishing Channel ID, 0 to disable fishing
+    "ExceptionBalls": {
+      "Crystal Onix": "mb"
+    },
+    // Set which balls to send on specific pokemons
     "Balls": {
       // Which ball for which rarity (hunting)
       "Common": "pb",

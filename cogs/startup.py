@@ -10,6 +10,7 @@ from discord import SlashCommand, UserCommand, MessageCommand, SubCommand, TextC
 class Config:
     hunting_channel_id: int
     fishing_channel_id: int
+    exception_balls: Dict[str, str]
     balls: Dict[str, str]
     fish_balls: Dict[str, str]
     auto_buy: Dict[str, int]
