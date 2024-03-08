@@ -8,7 +8,7 @@ from discord.ext.commands import Bot
 console = Console()
 
 
-def log(bots: List[Bot], start_time: datetime, clear_console: bool) -> None:
+def logger(bots: List[Bot], start_time: datetime, clear_console: bool) -> None:
     elapsed_time = datetime.now() - start_time
     hours = elapsed_time.seconds // 3600
     minutes = (elapsed_time.seconds % 3600) // 60
@@ -25,7 +25,16 @@ def log(bots: List[Bot], start_time: datetime, clear_console: bool) -> None:
         table.add_column(
             name,
             style="bold blue"
-        ) for name in ["Username", "Encounters", "Catches", "Fish Encounters", "Fish Catches", "Coins Earned"]
+        ) for name in [
+            "Username",
+            "Encounters",
+            "Catches",
+            "Fish Encounters",
+            "Fish Catches",
+            "Coins Earned",
+            "Hunting Status",
+            "Fishing Status"
+        ]
     ]
 
     total_encounters, total_catches, total_fish_encounters, total_fish_catches, total_coins_earned = 0, 0, 0, 0, 0
@@ -40,7 +49,9 @@ def log(bots: List[Bot], start_time: datetime, clear_console: bool) -> None:
             str(bot.catches),
             str(bot.fish_encounters),
             str(bot.fish_catches),
-            str(bot.coins_earned)
+            str(bot.coins_earned),
+            str(bot.hunting_status),
+            str(bot.fishing_status)
         )
 
         total_encounters += bot.encounters

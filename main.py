@@ -8,9 +8,9 @@ import discord
 from discord.ext.commands import Bot
 
 from cogs.fishing import Fishing
-from modules.logging import log
 from cogs.captcha import Captcha
 from cogs.hunting import Hunting
+from modules.logging import logger
 from cogs.startup import Startup, Config
 
 start_time = datetime.now()
@@ -19,10 +19,8 @@ config = json.load(open("config.json"))
 bots: List[Bot] = []
 
 
-async def logger():
-    await asyncio.sleep(config["LoggingInterval"])
-    log(bots, start_time, config["ClearConsole"])
-    await asyncio.create_task(logger())
+async def log_function():
+    logger(bots, start_time, config["ClearConsole"])
 
 
 async def start_bots(token: str) -> None:
@@ -34,6 +32,9 @@ async def start_bots(token: str) -> None:
         return
 
     bot = Bot(command_prefix=token)
+    bot.log = log_function
+    bot.hunting_status = ""
+    bot.fishing_status = ""
     bot.config = Config(
         config[token]["HuntingChannel"],
         config[token]["FishingChannel"],
@@ -67,10 +68,18 @@ async def start_bots(token: str) -> None:
     await bot.add_cog(Startup(bot))
 
     if bot.config.fishing_channel_id != 0:
+        bot.fishing_status = "Starting..."
+        await bot.log()
         await bot.add_cog(Fishing(bot))
+    else:
+        bot.fishing_status = "Disabled"
 
     if bot.config.hunting_channel_id != 0:
+        bot.hunting_status = "Starting..."
+        await bot.log()
         await bot.add_cog(Hunting(bot))
+    else:
+        bot.hunting_status = "Disabled"
 
     if bot.config.captcha_solver:
         await bot.add_cog(Captcha(bot))
@@ -79,9 +88,7 @@ async def start_bots(token: str) -> None:
 
 
 async def start() -> None:
-    await asyncio.gather(
-        *[start_bots(token) for token in list(config.keys())[6:]], logger()
-    )
+    await asyncio.gather(*[start_bots(token) for token in list(config.keys())[5:]])
 
 
 asyncio.run(start())

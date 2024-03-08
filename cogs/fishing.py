@@ -32,6 +32,9 @@ class Fishing(commands.Cog):
         if "Please wait" not in message.content:
             return
 
+        self.bot.fishing_status = "Grinding..."
+        await self.bot.log()
+
         await asyncio.sleep(self.config.retry_cooldown)
         await asyncio.sleep(randint(0, self.config.suspicion_avoidance) / 1000)
         await self.bot.fishing_channel_commands["fish spawn"]()
@@ -52,6 +55,9 @@ class Fishing(commands.Cog):
             "Not even a nibble" in after.embeds[0].description
             or "The Pokemon got away..." in after.embeds[0].description
         ):
+            self.bot.fishing_status = "Grinding..."
+            await self.bot.log()
+
             self.bot.last_fish = time()
             await asyncio.sleep(self.config.fishing_cooldown)
             await asyncio.sleep(randint(0, self.config.suspicion_avoidance) / 1000)
@@ -62,7 +68,9 @@ class Fishing(commands.Cog):
             "cast out a" in after.embeds[0].description
             and "click the" in after.embeds[0].description
         ):
+            self.bot.fishing_status = "Grinding..."
             self.bot.last_fish = time()
+            await self.bot.log()
 
             try:
                 await after.components[0].children[0].click()
@@ -74,6 +82,7 @@ class Fishing(commands.Cog):
 
         elif "fished out a wild" in after.embeds[0].description:
             self.bot.fish_encounters += 1
+            await self.bot.log()
 
             if "shiny" in after.embeds[0].description.lower():
                 ball = self.config.fish_balls["Shiny"]
@@ -112,6 +121,7 @@ class Fishing(commands.Cog):
             if "caught" in after.embeds[0].description:
                 self.bot.fish_catches += 1
                 self.bot.duplicates += 1
+                await self.bot.log()
 
                 if (
                     self.config.auto_release_duplicates != 0

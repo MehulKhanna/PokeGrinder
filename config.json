@@ -2,7 +2,6 @@
   "CaptchaRetries": 3,
   "ClearConsole": true,
   "CaptchaSolver": true,
-  "LoggingInterval": 10,
   "SuspicionAvoidance": 250,
   "Cooldowns": {
     "RetryCooldown": 1,

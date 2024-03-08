@@ -42,7 +42,6 @@ The logs may look different for you depending on your terminal config ;).
 
 - Logs encounters, catches as well as coins earned.
 - Displays a table containing stats for all accounts with time elapsed.
-- Frequency of logging can be changed in the config.
 
 7. Quests
 - Automatically sends `/quest info` when a new quest is ready.
@@ -65,8 +64,6 @@ The logs may look different for you depending on your terminal config ;).
   // Whether to clear console or not (set false to see errors)
   "CaptchaSolver": true,
   // Automatically solve captcha true/false
-  "LoggingInterval": 10,
-  // Interval between updating log table in seconds
   "SuspicionAvoidance": 250,
   // Random delay (b/w 0 and the value) for responses in milliseconds
   "Cooldowns": {

@@ -27,6 +27,14 @@ class Captcha(commands.Cog):
         if "captcha" not in message.embeds[0].description:
             return
 
+        if message.interaction.channel.id == self.config.hunting_channel_id:
+            self.bot.hunting_status = "Solving Captcha..."
+
+        else:
+            self.bot.fishing_status = "Solving Captcha..."
+
+        await self.bot.log()
+
         await asyncio.sleep(
             self.config.retry_cooldown
             + randint(0, self.config.suspicion_avoidance) / 1000
@@ -65,6 +73,14 @@ class Captcha(commands.Cog):
 
         if "captcha" not in after.embeds[0].description:
             return
+
+        if after.interaction.channel.id == self.config.hunting_channel_id:
+            self.bot.hunting_status = "Solving Captcha..."
+
+        else:
+            self.bot.fishing_status = "Solving Captcha..."
+
+        await self.bot.log()
 
         if int(after.embeds[0].description.split("**")[5]) < (
             5 - self.config.captcha_retries
