@@ -132,6 +132,14 @@ class Hunting(commands.Cog):
         ):
             return
 
+        if after.content == before.content:
+            if after.embeds != []:
+                if before.embeds != []:
+                    if after.embeds[0].description == before.embeds[0].description:
+                        return
+            else:
+                return
+
         tasks = []
 
         if "caught" in after.embeds[0].description:
