@@ -43,7 +43,7 @@ class Captcha(commands.Cog):
         await message.channel.send(solve_captcha(message.embeds[0].image.url))
 
     @commands.Cog.listener()
-    async def on_message_edit(self, _, after: Message) -> None:
+    async def on_message_edit(self, before, after: Message) -> None:
         if not after.interaction:
             return
 
@@ -53,6 +53,14 @@ class Captcha(commands.Cog):
             or after.interaction.user.id != self.bot.user.id
         ):
             return
+
+        if after.content == before.content:
+            if after.embeds != []:
+                if before.embeds != []:
+                    if after.embeds[0].description == before.embeds[0].description:
+                        return
+            else:
+                return
 
         if "Thank you" in after.content:
             await asyncio.sleep(
