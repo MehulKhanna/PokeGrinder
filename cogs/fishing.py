@@ -51,6 +51,9 @@ class Fishing(commands.Cog):
         ):
             return
 
+        if after.content == before.content and after.embeds[0].description == before.embeds[0].description:
+            return
+
         if (
             "Not even a nibble" in after.embeds[0].description
             or "The Pokemon got away..." in after.embeds[0].description
@@ -80,7 +83,7 @@ class Fishing(commands.Cog):
 
             return
 
-        elif "fished out a wild" in after.embeds[0].description:
+        elif "fished a wild" in after.embeds[0].description:
             self.bot.fish_encounters += 1
             await self.bot.log()
 
@@ -115,7 +118,7 @@ class Fishing(commands.Cog):
             await buttons[-1].click()
             return
 
-        elif "fished out a wild" in before.embeds[0].description:
+        elif "fished a wild" in before.embeds[0].description:
             tasks = []
 
             if "caught" in after.embeds[0].description:
