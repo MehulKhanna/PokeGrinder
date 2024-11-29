@@ -68,7 +68,7 @@ class Fishing(commands.Cog):
             return
 
         elif (
-            "cast out a" in after.embeds[0].description
+            "cast" in after.embeds[0].description
             and "click the" in after.embeds[0].description
         ):
             self.bot.fishing_status = "Grinding..."
