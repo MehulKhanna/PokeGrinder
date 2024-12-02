@@ -52,7 +52,7 @@ The logs may look different for you depending on your terminal config ;).
 
 ## Upcoming Features
 
-1. Holding and Hatching Eggs
+1. PokeGrinderV3 [PAID]
 
 ## Config
 
