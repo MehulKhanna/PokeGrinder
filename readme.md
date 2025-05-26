@@ -1,3 +1,6 @@
+# Disclaimer ⚠️
+Pokemeow has recently changed its captchas, so the captcha solver won't work until a new one is trained. Please disable the captcha solver before you run PokeGrinder.
+
 # PokeGrinder V2 
 
 A robust and efficient discord self-bot for automating Pokémeow with a free captcha solver.
