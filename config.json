@@ -1,7 +1,7 @@
 {
   "CaptchaRetries": 3,
   "ClearConsole": true,
-  "CaptchaSolver": true,
+  "CaptchaSolver": false,
   "SuspicionAvoidance": 250,
   "Cooldowns": {
     "RetryCooldown": 1,
